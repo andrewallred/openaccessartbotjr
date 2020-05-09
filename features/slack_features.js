@@ -4,7 +4,7 @@
  */
 const { SlackDialog } = require('botbuilder-adapter-slack');
 
-const CollectionApiService = require('services/collectionapi_service');
+const CollectionApiService = require('../services/collectionapi_service.js');
 
 module.exports = function(controller) {
 
