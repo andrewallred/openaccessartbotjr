@@ -34,7 +34,7 @@ module.exports = function(controller) {
             console.log('got an object');
             console.log(selectedObject);
 
-            await bot.replyPublic(message, selectedObject);
+            bot.replyPublic(message, selectedObject);
 
         }
 
