@@ -83,6 +83,11 @@ module.exports = function(controller) {
 
     });
 
+    // receive an interactive message, and reply with a message that will replace the original
+    controller.on('block_actions', function(bot, message) {
+        console.log('block action');
+    });
+
     controller.on('interactive_message', async (bot, message) => {
 
         console.log('INTERACTIVE MESSAGE', message);
