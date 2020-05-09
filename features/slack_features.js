@@ -7,11 +7,7 @@ const { SlackDialog } = require('botbuilder-adapter-slack');
 module.exports = function(controller) {
 
     controller.ready(async () => {
-        if (process.env.MYTEAM) {
-            let bot = await controller.spawn(process.env.MYTEAM);
-            await bot.startConversationInChannel(process.env.MYCHAN,process.env.MYUSER);
-            bot.say('I AM AWOKEN.');
-        }
+
     });
 
     controller.on('slash_command', async(bot, message) => {
