@@ -88,6 +88,8 @@ module.exports = function(controller) {
         console.log('block action');
     });
 
+    controller.on('button', 'block_actions', async (bot, message) => console.log('Pressed button!'));
+
     controller.on('interactive_message', async (bot, message) => {
 
         console.log('INTERACTIVE MESSAGE', message);
