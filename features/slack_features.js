@@ -141,7 +141,7 @@ function sendInteractiveDialog(bot, message, searchTerm, objectData) {
                             "text": "Shuffle"
                         },
                         "style": "primary",
-                        "value": "shuffle" + searchTerm
+                        "value": "shuffle " + searchTerm
                     },
                     {
                         "type": "button",
