@@ -29,7 +29,7 @@ module.exports = function(controller) {
 
             //bot.replyPublic(message,response);
 
-            bot.replyInteractive(message, {
+            bot.replyPrivate(message, {
                 attachments:[
                   {
                     title: 'Would you like to interact?',
