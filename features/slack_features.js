@@ -53,7 +53,7 @@ module.exports = function(controller) {
                                 },
                                 "style": "primary",
                                 "value": "select",
-                                "request_url: "https://openaccessartbot-test.herokuapp.com/test"
+                                "request_url": "https://openaccessartbot-test.herokuapp.com/test"
                             },
                             {
                                 "type": "button",
