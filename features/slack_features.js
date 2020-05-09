@@ -25,7 +25,7 @@ module.exports = function(controller) {
             console.log('got an object');
             console.log(selectedObjectId);
 
-            var response = buildFoundResponse(objectData.primaryImageSmall, objectData.objectURL, searchTerm, message.user_name);
+            //var response = buildFoundResponse(objectData.primaryImageSmall, objectData.objectURL, searchTerm, message.user_name);
 
             //bot.replyPublic(message,response);
 
@@ -38,7 +38,7 @@ module.exports = function(controller) {
                             "text": "Example Image",
                             "emoji": true
                         },
-                        "image_url": "https://images.metmuseum.org/CRDImages/as/web-large/DP121510.jpg",
+                        "image_url": objectData.primaryImageSmall,
                         "alt_text": "monet"
                     },
                     {
