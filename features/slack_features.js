@@ -37,8 +37,17 @@ module.exports = function(controller) {
 
     // receive an interactive message, and reply with a message that will replace the original
     controller.on('block_actions', function(bot, message) {
-        console.log('block action');
-        console.log(message);
+
+        console.log('block action! ' + message.text);
+
+        const searchTerm = message.text.replace('shuffle ', '');
+
+        let selectedObjectId = await CollectionApiService.getObjectForSearchTerm(searchTerm);
+
+        let objectData = await CollectionApiService.getObjectById(selectedObjectId);
+        
+        sendInteractiveDialog(bot, message, objectData);
+
     });
 
     controller.on('button', 'block_actions', async (bot, message) => console.log('Pressed button!'));
@@ -97,7 +106,7 @@ function buildFoundResponse(imageUrl, objectUrl, searchTerm, userName) {
     return response;
 }
 
-function sendInteractiveDialog(bot, message, objectData) {
+function sendInteractiveDialog(bot, message, searchTerm, objectData) {
 
     bot.replyInteractive(message, {
         "blocks": [
@@ -132,7 +141,7 @@ function sendInteractiveDialog(bot, message, objectData) {
                             "text": "Shuffle"
                         },
                         "style": "primary",
-                        "value": "shuffle"
+                        "value": "shuffle" + searchTerm
                     },
                     {
                         "type": "button",
