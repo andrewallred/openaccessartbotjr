@@ -29,14 +29,18 @@ module.exports = function(controller) {
 
         if (message.command === "/oa") {
             
-            let selectedObject = await CollectionApiService.getObjectForSearchTerm(message.text);
+            const searchTerm = message.text;
+
+            let selectedObjectId = await CollectionApiService.getObjectForSearchTerm(searchTerm);
+
+            let objectData = await CollectionApiService.getObjectById(selectedObjectId);
 
             console.log('got an object');
-            console.log(selectedObject);
-            console.log(message);
-            console.log(typeof selectedObject);
+            console.log(selectedObjectId);
 
-            bot.replyPublic(message, "test: " + selectedObject);
+            var response = buildFoundResponse(objectData.primaryImageSmall, objectData.objectURL, searchTerm, message.user_name);
+
+            bot.replyPublic(message,response);
 
         }
 
@@ -85,4 +89,13 @@ module.exports = function(controller) {
         await bot.reply(message, 'Got a dialog cancellation');
     });
 
+}
+
+function buildFoundResponse(imageUrl, objectUrl, searchTerm, userName) {
+    var response = {};
+    response.text = '<' + imageUrl + '|' + decodeURI(searchTerm) + '> requested by ' + userName + ' (' + '<' + objectUrl + '|learn more>)';
+            
+    console.log(response);
+
+    return response;
 }
