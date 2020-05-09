@@ -52,7 +52,8 @@ module.exports = function(controller) {
                                     "text": "Select"
                                 },
                                 "style": "primary",
-                                "value": "select"
+                                "value": "select",
+                                "request_url: "https://openaccessartbot-test.herokuapp.com/test"
                             },
                             {
                                 "type": "button",
