@@ -13,19 +13,6 @@ module.exports = function(controller) {
     });
 
     controller.on('slash_command', async(bot, message) => {
-        
-        // if (message.text === 'plain') {
-        //     await bot.reply(message, 'This is a plain reply');
-        // } else if (message.text === 'public') {
-        //     await bot.replyPublic(message, 'This is a public reply');
-        // } else if (message.text === 'private') {
-        //     await bot.replyPrivate(message, 'This is a private reply');
-        // } else if (message.text === 'oa') {
-        //     await bot.replyPublic(message, 'oabot');
-        // }
-
-        //await bot.replyPublic(message, message.text);
-        //await bot.replyPublic(message, message.command);
 
         if (message.command === "/oa") {
             
@@ -40,7 +27,31 @@ module.exports = function(controller) {
 
             var response = buildFoundResponse(objectData.primaryImageSmall, objectData.objectURL, searchTerm, message.user_name);
 
-            bot.replyPublic(message,response);
+            //bot.replyPublic(message,response);
+
+            bot.replyInteractive(message, {
+                attachments:[
+                  {
+                    title: 'Would you like to interact?',
+                    callback_id: '123',
+                    attachment_type: 'default',
+                    actions: [
+                       {
+                          "name":"replace",
+                          "text": "Yes",
+                          "value": "yes",
+                          "type": "button"
+                       },
+                       {
+                           "name":"no",
+                           "text": "No",
+                           "value": "no",
+                           "type": "button",
+                       }
+                    ]
+                  }
+                ]
+              }); 
 
         }
 
