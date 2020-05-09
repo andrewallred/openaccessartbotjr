@@ -33,6 +33,7 @@ module.exports = function(controller) {
 
             console.log('got an object');
             console.log(selectedObject);
+            console.log(message);
 
             bot.replyPublic(message, selectedObject);
 
