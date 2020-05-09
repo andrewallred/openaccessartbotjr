@@ -29,55 +29,7 @@ module.exports = function(controller) {
 
             //bot.replyPublic(message,response);
 
-            bot.replyInteractive(message, {
-                "blocks": [
-                    {
-                        "type": "image",
-                        "title": {
-                            "type": "plain_text",
-                            "text": "Example Image",
-                            "emoji": true
-                        },
-                        "image_url": objectData.primaryImageSmall,
-                        "alt_text": "monet"
-                    },
-                    {
-                        "type": "actions",
-                        "elements": [
-                            {
-                                "type": "button",
-                                "text": {
-                                    "type": "plain_text",
-                                    "emoji": true,
-                                    "text": "Select"
-                                },
-                                "style": "primary",
-                                "value": "select"
-                            },
-                            {
-                                "type": "button",
-                                "text": {
-                                    "type": "plain_text",
-                                    "emoji": true,
-                                    "text": "Shuffle"
-                                },
-                                "style": "primary",
-                                "value": "shuffle"
-                            },
-                            {
-                                "type": "button",
-                                "text": {
-                                    "type": "plain_text",
-                                    "emoji": true,
-                                    "text": "Cancel"
-                                },
-                                "style": "danger",
-                                "value": "cancel"
-                            }
-                        ]
-                    }		
-                ]
-              }); 
+            sendInteractiveDialog(bot, message, objectData);
 
         }
 
@@ -143,4 +95,58 @@ function buildFoundResponse(imageUrl, objectUrl, searchTerm, userName) {
     console.log(response);
 
     return response;
+}
+
+function sendInteractiveDialog(bot, message, objectData) {
+
+    bot.replyInteractive(message, {
+        "blocks": [
+            {
+                "type": "image",
+                "title": {
+                    "type": "plain_text",
+                    "text": "Example Image",
+                    "emoji": true
+                },
+                "image_url": objectData.primaryImageSmall,
+                "alt_text": "monet"
+            },
+            {
+                "type": "actions",
+                "elements": [
+                    {
+                        "type": "button",
+                        "text": {
+                            "type": "plain_text",
+                            "emoji": true,
+                            "text": "Select"
+                        },
+                        "style": "primary",
+                        "value": "select"
+                    },
+                    {
+                        "type": "button",
+                        "text": {
+                            "type": "plain_text",
+                            "emoji": true,
+                            "text": "Shuffle"
+                        },
+                        "style": "primary",
+                        "value": "shuffle"
+                    },
+                    {
+                        "type": "button",
+                        "text": {
+                            "type": "plain_text",
+                            "emoji": true,
+                            "text": "Cancel"
+                        },
+                        "style": "danger",
+                        "value": "cancel"
+                    }
+                ]
+            }		
+        ]
+      }); 
+
 }
