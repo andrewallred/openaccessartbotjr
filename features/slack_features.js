@@ -40,13 +40,22 @@ module.exports = function(controller) {
 
         console.log('block action! ' + message.text);
 
-        const searchTerm = message.text.replace('shuffle ', '');
+        if (message.text.contains('shuffle ')) {
 
-        let selectedObjectId = await CollectionApiService.getObjectForSearchTerm(searchTerm);
+            const searchTerm = message.text.replace('shuffle ', '');
 
-        let objectData = await CollectionApiService.getObjectById(selectedObjectId);
+            let selectedObjectId = await CollectionApiService.getObjectForSearchTerm(searchTerm);
+
+            let objectData = await CollectionApiService.getObjectById(selectedObjectId);
+            
+            sendInteractiveDialog(bot, message, searchTerm, objectData);
+
+        } else if (message.text.contains('cancel')) {
+
+            bot.deleteMessage(message);
+
+        }
         
-        sendInteractiveDialog(bot, message, searchTerm, objectData);
 
     });
 
