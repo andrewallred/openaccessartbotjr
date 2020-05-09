@@ -25,13 +25,13 @@ module.exports = function(controller) {
         // }
 
         //await bot.replyPublic(message, message.text);
-        //await bot.replyPublic(message, message.command);
+        await bot.replyPublic(message, message.command);
 
         if (message.command == "oa") {
             
             let selectedObject = await CollectionApiService.getObjectForSearchTerm(message.text);
 
-            console.log(selectedObject);
+            await bot.replyPublic(message, selectedObject);
 
         }
 
