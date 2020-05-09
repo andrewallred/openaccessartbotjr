@@ -40,6 +40,8 @@ module.exports = function(controller) {
 
         console.log('block action! ' + message.text);
 
+        console.log(message);
+
         if (message.text.includes('shuffle ')) {
 
             const searchTerm = message.text.replace('shuffle ', '');
