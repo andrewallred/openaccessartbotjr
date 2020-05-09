@@ -22,7 +22,8 @@ module.exports = function(controller) {
         }
 
         // set http status
-        bot.httpBody({text:'You can send an immediate response using bot.httpBody()'});
+        //bot.httpBody({text:'You can send an immediate response using bot.httpBody()'});
+        console.log(message.text);
 
     });
 
