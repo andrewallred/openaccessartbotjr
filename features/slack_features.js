@@ -17,6 +17,8 @@ module.exports = function(controller) {
             await bot.replyPublic(message, 'This is a public reply');
         } else if (message.text === 'private') {
             await bot.replyPrivate(message, 'This is a private reply');
+        } else if (message.text === 'oa') {
+            await bot.replyPublic(message, 'oabot');
         }
 
         // set http status
