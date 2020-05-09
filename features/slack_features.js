@@ -31,6 +31,9 @@ module.exports = function(controller) {
             
             let selectedObject = await CollectionApiService.getObjectForSearchTerm(message.text);
 
+            console.log('got an object');
+            console.log(selectedObject);
+
             await bot.replyPublic(message, selectedObject);
 
         }
