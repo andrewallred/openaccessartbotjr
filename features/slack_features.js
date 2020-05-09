@@ -52,7 +52,7 @@ module.exports = function(controller) {
                                     "text": "Select"
                                 },
                                 "style": "primary",
-                                "value": "click_me_123"
+                                "value": "select"
                             },
                             {
                                 "type": "button",
@@ -62,17 +62,17 @@ module.exports = function(controller) {
                                     "text": "Shuffle"
                                 },
                                 "style": "primary",
-                                "value": "click_me_123"
+                                "value": "shuffle"
                             },
                             {
                                 "type": "button",
                                 "text": {
                                     "type": "plain_text",
                                     "emoji": true,
-                                    "text": "Deny"
+                                    "text": "Cancel"
                                 },
                                 "style": "danger",
-                                "value": "click_me_123"
+                                "value": "cancel"
                             }
                         ]
                     }		
