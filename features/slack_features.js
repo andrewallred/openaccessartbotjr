@@ -34,8 +34,9 @@ module.exports = function(controller) {
             console.log('got an object');
             console.log(selectedObject);
             console.log(message);
+            console.log(typeof selectedObject);
 
-            bot.replyPublic(message, "test");
+            bot.replyPublic(message, "test: " + selectedObject);
 
         }
 
