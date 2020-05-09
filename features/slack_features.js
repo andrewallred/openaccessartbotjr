@@ -35,7 +35,7 @@ module.exports = function(controller) {
             console.log(selectedObject);
             console.log(message);
 
-            bot.replyPublic(message, selectedObject);
+            bot.replyPublic(message, "test");
 
         }
 
