@@ -40,7 +40,7 @@ module.exports = function(controller) {
 
         console.log('block action! ' + message.text);
 
-        if (message.text.contains('shuffle ')) {
+        if (message.text.includes('shuffle ')) {
 
             const searchTerm = message.text.replace('shuffle ', '');
 
@@ -50,7 +50,7 @@ module.exports = function(controller) {
             
             sendInteractiveDialog(bot, message, searchTerm, objectData);
 
-        } else if (message.text.contains('cancel')) {
+        } else if (message.text.includes('cancel')) {
 
             bot.deleteMessage(message);
 
