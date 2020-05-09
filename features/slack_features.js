@@ -23,7 +23,10 @@ module.exports = function(controller) {
 
         // set http status
         //bot.httpBody({text:'You can send an immediate response using bot.httpBody()'});
-        console.log(message.text);
+        //console.log(message.text);
+
+        await bot.replyPublic(message, message.text);
+        await bot.replyPublic(message, message.command);
 
     });
 
