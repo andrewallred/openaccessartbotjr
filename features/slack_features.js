@@ -29,14 +29,14 @@ module.exports = function(controller) {
 
             //bot.replyPublic(message,response);
 
-            await sendInteractiveDialog(bot, message, objectData);
+            sendInteractiveDialog(bot, message, objectData);
 
         }
 
     });
 
     // receive an interactive message, and reply with a message that will replace the original
-    controller.on('block_actions', function(bot, message) {
+    controller.on('block_actions', async(bot, message) => {
 
         console.log('block action! ' + message.text);
 
@@ -46,7 +46,7 @@ module.exports = function(controller) {
 
         let objectData = await CollectionApiService.getObjectById(selectedObjectId);
         
-        await sendInteractiveDialog(bot, message, objectData);
+        sendInteractiveDialog(bot, message, objectData);
 
     });
 
