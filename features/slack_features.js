@@ -29,27 +29,53 @@ module.exports = function(controller) {
 
             //bot.replyPublic(message,response);
 
-            bot.replyPrivate(message, {
-                attachments:[
-                  {
-                    title: 'Would you like to interact?',
-                    callback_id: '123',
-                    attachment_type: 'default',
-                    actions: [
-                       {
-                          "name":"replace",
-                          "text": "Yes",
-                          "value": "yes",
-                          "type": "button"
-                       },
-                       {
-                           "name":"no",
-                           "text": "No",
-                           "value": "no",
-                           "type": "button",
-                       }
-                    ]
-                  }
+            bot.replyInteractive(message, {
+                "blocks": [
+                    {
+                        "type": "image",
+                        "title": {
+                            "type": "plain_text",
+                            "text": "Example Image",
+                            "emoji": true
+                        },
+                        "image_url": "https://images.metmuseum.org/CRDImages/as/web-large/DP121510.jpg",
+                        "alt_text": "monet"
+                    },
+                    {
+                        "type": "actions",
+                        "elements": [
+                            {
+                                "type": "button",
+                                "text": {
+                                    "type": "plain_text",
+                                    "emoji": true,
+                                    "text": "Select"
+                                },
+                                "style": "primary",
+                                "value": "click_me_123"
+                            },
+                            {
+                                "type": "button",
+                                "text": {
+                                    "type": "plain_text",
+                                    "emoji": true,
+                                    "text": "Shuffle"
+                                },
+                                "style": "primary",
+                                "value": "click_me_123"
+                            },
+                            {
+                                "type": "button",
+                                "text": {
+                                    "type": "plain_text",
+                                    "emoji": true,
+                                    "text": "Deny"
+                                },
+                                "style": "danger",
+                                "value": "click_me_123"
+                            }
+                        ]
+                    }		
                 ]
               }); 
 
