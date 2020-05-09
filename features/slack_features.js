@@ -29,7 +29,7 @@ module.exports = function(controller) {
 
             //bot.replyPublic(message,response);
 
-            sendInteractiveDialog(bot, message, objectData);
+            await sendInteractiveDialog(bot, message, objectData);
 
         }
 
@@ -46,7 +46,7 @@ module.exports = function(controller) {
 
         let objectData = await CollectionApiService.getObjectById(selectedObjectId);
         
-        sendInteractiveDialog(bot, message, objectData);
+        await sendInteractiveDialog(bot, message, objectData);
 
     });
 
