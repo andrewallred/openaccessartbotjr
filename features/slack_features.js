@@ -57,7 +57,7 @@ module.exports = function(controller) {
             let response = buildFoundResponse(imageUrl, '', '', '');
 
             //bot.replyPublic(message, response);
-            sendPublicBlocks(bot, message, '', imageUrl);
+            sendPublicBlocks(bot, null, '', imageUrl);
             
 
         } else if (message.text.includes('shuffle ')) {
