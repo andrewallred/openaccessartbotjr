@@ -50,8 +50,6 @@ module.exports = function(controller) {
         //console.log(message);
         //console.log(message._activity);
 
-        bot.say('hello');
-
         if (message.text.includes('select ')) {
 
             const imageUrl = message.text.replace('select ', '');
