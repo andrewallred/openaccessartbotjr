@@ -45,6 +45,7 @@ module.exports = function(controller) {
         console.log('block action! ' + message.text);
 
         console.log(message);
+        console.log(message.activity);
 
         if (message.text.includes('select ')) {
 
