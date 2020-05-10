@@ -1,3 +1,5 @@
+// not totally clean implementation of service calls for the collection api
+
 module.exports = { getObjectForSearchTerm, getObjectById }
 
 const axios = require('axios').default;
