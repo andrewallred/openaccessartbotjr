@@ -67,7 +67,11 @@ module.exports = function(controller) {
             
             sendInteractiveDialog(bot, message, searchTerm, objectData);
 
-        } else if (message.text.includes('cancel')) {
+        } else if (message.text.includes('cancel ')) {
+
+            const activityId = message.text.replace('cancel ', '');
+
+            message.activityId = activityId;
 
             bot.deleteMessage(message);
 
@@ -150,7 +154,7 @@ function sendInteractiveDialog(bot, message, searchTerm, objectData) {
                             "text": "Cancel"
                         },
                         "style": "danger",
-                        "value": "cancel"
+                        "value": "cancel " + message.reference.activityId
                     }
                 ]
             }		
