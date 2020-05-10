@@ -101,7 +101,7 @@ function buildFoundResponse(imageUrl, objectUrl, searchTerm, userName) {
 
 function sendPublicBlocks(bot, message, searchTerm, imageUrl) {
 
-    bot.replyPublic(null, 'selected!');
+    bot.replyPublic(message, 'selected!');
 
     /*bot.replyPublic(message, {
         "blocks": [
