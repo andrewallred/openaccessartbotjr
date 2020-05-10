@@ -14,6 +14,10 @@ module.exports = function(controller) {
 
     controller.on('slash_command', async(bot, message) => {
 
+        console.log('slash command');
+
+        console.log(message);
+
         if (message.command === "/oa") {
             
             const searchTerm = message.text;
