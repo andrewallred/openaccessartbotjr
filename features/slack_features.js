@@ -23,9 +23,7 @@ module.exports = function(controller) {
 
             let objectData = await CollectionApiService.getObjectById(selectedObjectId);
 
-            //console.log(message.user_name);
-
-            await sendInteractiveDialog(bot, message, searchTerm, objectData);
+            await sendInteractiveDialog(bot, message, searchTerm, objectData, message.user_name);
 
         }
 
@@ -38,12 +36,7 @@ module.exports = function(controller) {
 
             const selectData = JSON.parse(message.text.replace('select ', ''));
 
-            console.log(selectData);
-
             let deleteUrl = message.incoming_message.channelData.response_url;
-
-            console.log('to delete');
-            console.log(deleteUrl);
 
             SlackApiService.deleteEphemeralMessage(deleteUrl);
 
@@ -55,13 +48,13 @@ module.exports = function(controller) {
 
         } else if (message.text.includes('shuffle ')) {
 
-            const searchTerm = message.text.replace('shuffle ', '');
+            const selectData = JSON.parse(message.text.replace('shuffle ', ''));
 
-            let selectedObjectId = await CollectionApiService.getObjectForSearchTerm(searchTerm);
+            let selectedObjectId = await CollectionApiService.getObjectForSearchTerm(selectData.searchTerm);
 
             let objectData = await CollectionApiService.getObjectById(selectedObjectId);
             
-            await sendInteractiveDialog(bot, message, searchTerm, objectData);
+            await sendInteractiveDialog(bot, message, selectData.searchTerm, objectData, selectData.userName);
 
         } else if (message.text.includes('cancel ')) {
 
@@ -82,16 +75,14 @@ function buildFoundResponse(imageUrl, objectUrl, searchTerm, userName) {
     return response;
 }
 
-async function sendInteractiveDialog(bot, message, searchTerm, objectData) {
+async function sendInteractiveDialog(bot, message, searchTerm, objectData, userName) {
 
     var sendData = {
         imageUrl: objectData.primaryImageSmall,
         objectUrl: objectData.objectURL,
         searchTerm: searchTerm,
-        userName: message.user_name
+        userName: userName
     };
-
-    console.log(sendData);
 
     await bot.replyInteractive(message, {
         "blocks": [
@@ -124,7 +115,7 @@ async function sendInteractiveDialog(bot, message, searchTerm, objectData) {
                             "emoji": true,
                             "text": "Shuffle"
                         },
-                        "value": "shuffle " + searchTerm
+                        "value": "shuffle " + JSON.stringify(sendData)
                     },
                     {
                         "type": "button",
