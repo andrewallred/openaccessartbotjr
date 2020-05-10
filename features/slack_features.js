@@ -53,7 +53,9 @@ module.exports = function(controller) {
 
             let response = buildFoundResponse(imageUrl, '', '', '');
 
-            bot.replyPublic(message, response);
+            //bot.replyPublic(message, response);
+            sendPublicBlocks(bot, message, '', imageUrl);
+            
 
         } else if (message.text.includes('shuffle ')) {
 
@@ -82,6 +84,25 @@ function buildFoundResponse(imageUrl, objectUrl, searchTerm, userName) {
     console.log(response);
 
     return response;
+}
+
+function sendPublicBlocks(bot, message, searchTerm, imageUrl) {
+
+    bot.replyPublic(message, {
+        "blocks": [
+            {
+                "type": "image",
+                "title": {
+                    "type": "plain_text",
+                    "text": "Example Image",
+                    "emoji": true
+                },
+                "image_url": imageUrl,
+                "alt_text": "monet"
+            }
+        ]
+      }); 
+
 }
 
 function sendInteractiveDialog(bot, message, searchTerm, objectData) {
