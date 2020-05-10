@@ -101,7 +101,9 @@ function buildFoundResponse(imageUrl, objectUrl, searchTerm, userName) {
 
 function sendPublicBlocks(bot, message, searchTerm, imageUrl) {
 
-    bot.replyPublic(message, {
+    bot.replyPublic(null, 'selected!');
+
+    /*bot.replyPublic(message, {
         "blocks": [
             {
                 "type": "image",
@@ -114,7 +116,7 @@ function sendPublicBlocks(bot, message, searchTerm, imageUrl) {
                 "alt_text": "monet"
             }
         ]
-      }); 
+      });*/ 
 
 }
 
