@@ -21,9 +21,20 @@ module.exports = function(controller) {
 
             let selectedObjectId = await CollectionApiService.getObjectForSearchTerm(searchTerm);
 
-            let objectData = await CollectionApiService.getObjectById(selectedObjectId);
+            if (selectedObjectId == null) {
 
-            await sendInteractiveDialog(bot, message, searchTerm, objectData, message.user_name);
+                var response = buildNotFoundResponse("https://images.metmuseum.org/CRDImages/dp/web-large/DP815335.jpg", searchTerm, message.user_name);
+                
+                let responseUrl = message.incoming_message.channelData.response_url;
+                SlackApiService.respondPubliclyToEphemeralMessage(responseUrl, response);
+
+            } else {
+
+                let objectData = await CollectionApiService.getObjectById(selectedObjectId);
+
+                await sendInteractiveDialog(bot, message, searchTerm, objectData, message.user_name);
+
+            }
 
         }
 
@@ -69,6 +80,12 @@ module.exports = function(controller) {
 function buildFoundResponse(imageUrl, objectUrl, searchTerm, userName) {
 
     return '<' + imageUrl + '|' + decodeURI(searchTerm) + '> requested by ' + userName + ' (' + '<' + objectUrl + '|learn more>)';
+
+}
+
+function buildNotFoundResponse(imageUrl, searchTerm, userName) {
+
+    return searchTerm + ' not found, enjoy some <' + imageUrl + '|cats> instead, requested by ' + userName;
 
 }
 

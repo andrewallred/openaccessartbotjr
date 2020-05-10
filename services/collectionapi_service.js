@@ -11,10 +11,20 @@ const filter = " -nude -naked";
 
 async function getObjectForSearchTerm(searchTerm, getTopResult) {
 
+    var getTopResult = searchTerm.includes("#top ");
+
+    if (getTopResult) {
+        searchTerm = searchTerm.replace("#top ", "");
+    }
+
     const searchUrl = baseSearchUrl + searchTerm + filter;
     
     const results = await axios.get(searchUrl);
     const data = results.data;
+    
+    if (data == null || data.total == 0) {            
+        return null;
+    }
 
     console.log('selecting an object for searchTerm: ' + searchTerm);
 
