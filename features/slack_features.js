@@ -46,7 +46,13 @@ module.exports = function(controller) {
 
         console.log(message);
 
-        if (message.text.includes('shuffle ')) {
+        if (message.text.includes('select ')) {
+
+            const imageUrl = message.text.replace('select ', '');
+
+            buildFoundResponse(imageUrl, '', '', '');
+
+        } else if (message.text.includes('shuffle ')) {
 
             const searchTerm = message.text.replace('shuffle ', '');
 
@@ -146,7 +152,7 @@ function sendInteractiveDialog(bot, message, searchTerm, objectData) {
                             "text": "Select"
                         },
                         "style": "primary",
-                        "value": "select"
+                        "value": "select " + objectData.primaryImageSmall
                     },
                     {
                         "type": "button",
