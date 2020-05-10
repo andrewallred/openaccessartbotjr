@@ -5,6 +5,7 @@
 const { SlackDialog } = require('botbuilder-adapter-slack');
 
 const CollectionApiService = require('../services/collectionapi_service.js');
+const SlackApiService = require('../services/slackapi_service.js');
 
 module.exports = function(controller) {
 
@@ -14,9 +15,9 @@ module.exports = function(controller) {
 
     controller.on('slash_command', async(bot, message) => {
 
-        //console.log('slash command');
+        console.log('slash command');
 
-        //console.log(message);
+        console.log(message);
 
         if (message.command === "/oa") {
             
@@ -42,12 +43,12 @@ module.exports = function(controller) {
     // receive an interactive message, and reply with a message that will replace the original
     controller.on('block_actions', async(bot, message) => {
 
-        console.log("inmemmessage");
-        console.log(inmemmessage);
+        //console.log("inmemmessage");
+        //console.log(inmemmessage);
 
-        //console.log('block action! ' + message.text);
+        console.log('block action! ' + message.text);
 
-        //console.log(message);
+        console.log(message);
         //console.log(message._activity);
 
         if (message.text.includes('select ')) {
@@ -56,8 +57,16 @@ module.exports = function(controller) {
 
             let response = buildFoundResponse(imageUrl, '', '', '');
 
+            console.log('joining channel ' + message.channel);
+
+            await bot.startConversationInChannel(message.channel, null);
+
+            console.log('saying');
+
+            await bot.say('test');
+
             //bot.replyPublic(message, response);
-            sendPublicBlocks(bot, null, '', imageUrl);
+            //sendPublicBlocks(bot, null, '', imageUrl);
             
 
         } else if (message.text.includes('shuffle ')) {
@@ -74,13 +83,21 @@ module.exports = function(controller) {
 
             const activityId = message.text.replace('cancel ', '');
 
-            message.id = activityId;
-            message.conversation = message.incoming_message.conversation;
+            let messageToDelete = {};
+            messageToDelete.id = message.container.message_ts;
+            messageToDelete.conversation = message.incoming_message.conversation;
+
+            let deleteUrl = message.incoming_message.channelData.response_url;
+
+            console.log('to delete');
+            console.log(deleteUrl);
 
             //console.log(message.id);
-            //console.log(message.conversation);
+            //console.log(messageToDelete);
 
-            bot.deleteMessage(message);
+            //bot.deleteMessage(messageToDelete);
+
+            SlackApiService.deleteEphemeralMessage(deleteUrl);
 
         }
         
@@ -118,11 +135,13 @@ function sendPublicBlocks(bot, message, searchTerm, imageUrl) {
 
 }
 
-let inmemmessage;
+//let inmemmessage;
 
 async function sendInteractiveDialog(bot, message, searchTerm, objectData) {
 
-    inmemmessage = await bot.replyInteractive(message, {
+    //inmemmessage = message;
+
+    await bot.replyPublic(message, {
         "blocks": [
             {
                 "type": "image",
@@ -171,5 +190,22 @@ async function sendInteractiveDialog(bot, message, searchTerm, objectData) {
             }		
         ]
       }); 
+
+      //console.log(message);
+
+      let messageToDelete = {};
+      messageToDelete.id = message.incoming_message.id;
+      messageToDelete.conversation = message.incoming_message.conversation;
+
+      //console.log(messageToDelete);
+
+      //await bot.deleteMessage(messageToDelete);*/
+
+      //await bot.replyPublic(message, 'test');
+
+      //await bot.deleteMessage(messageToDelete);
+
+
+      //bot.reply(message, 'test2');
 
 }
