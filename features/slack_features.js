@@ -72,6 +72,7 @@ module.exports = function(controller) {
             const activityId = message.text.replace('cancel ', '');
 
             message.activityId = activityId;
+            message.conversation = message.incoming_message.conversation;
 
             bot.deleteMessage(message);
 
