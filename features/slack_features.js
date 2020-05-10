@@ -15,10 +15,6 @@ module.exports = function(controller) {
 
     controller.on('slash_command', async(bot, message) => {
 
-        console.log('slash command');
-
-        console.log(message);
-
         if (message.command === "/oa") {
             
             const searchTerm = message.text;
@@ -27,12 +23,7 @@ module.exports = function(controller) {
 
             let objectData = await CollectionApiService.getObjectById(selectedObjectId);
 
-            //console.log('got an object');
-            //console.log(selectedObjectId);
-
-            //var response = buildFoundResponse(objectData.primaryImageSmall, objectData.objectURL, searchTerm, message.user_name);
-
-            //bot.replyPublic(message,response);
+            //console.log(message.user_name);
 
             await sendInteractiveDialog(bot, message, searchTerm, objectData);
 
@@ -43,31 +34,24 @@ module.exports = function(controller) {
     // receive an interactive message, and reply with a message that will replace the original
     controller.on('block_actions', async(bot, message) => {
 
-        //console.log("inmemmessage");
-        //console.log(inmemmessage);
-
-        console.log('block action! ' + message.text);
-
-        console.log(message);
-        //console.log(message._activity);
-
         if (message.text.includes('select ')) {
 
-            const imageUrl = message.text.replace('select ', '');
+            const selectData = JSON.parse(message.text.replace('select ', ''));
 
-            let response = buildFoundResponse(imageUrl, '', '', '');
+            console.log(selectData);
 
-            console.log('joining channel ' + message.channel);
+            let deleteUrl = message.incoming_message.channelData.response_url;
 
-            await bot.startConversationInChannel(message.channel, null);
+            console.log('to delete');
+            console.log(deleteUrl);
 
-            console.log('saying');
+            SlackApiService.deleteEphemeralMessage(deleteUrl);
 
-            await bot.say('test');
+            await bot.startConversationInChannel(message.incoming_message.conversation.id, null);
 
-            //bot.replyPublic(message, response);
-            //sendPublicBlocks(bot, null, '', imageUrl);
-            
+            let response = buildFoundResponse(selectData.imageUrl, selectData.objectUrl, selectData.searchTerm, selectData.userName);
+
+            await bot.say(response);
 
         } else if (message.text.includes('shuffle ')) {
 
@@ -81,21 +65,7 @@ module.exports = function(controller) {
 
         } else if (message.text.includes('cancel ')) {
 
-            const activityId = message.text.replace('cancel ', '');
-
-            let messageToDelete = {};
-            messageToDelete.id = message.container.message_ts;
-            messageToDelete.conversation = message.incoming_message.conversation;
-
             let deleteUrl = message.incoming_message.channelData.response_url;
-
-            console.log('to delete');
-            console.log(deleteUrl);
-
-            //console.log(message.id);
-            //console.log(messageToDelete);
-
-            //bot.deleteMessage(messageToDelete);
 
             SlackApiService.deleteEphemeralMessage(deleteUrl);
 
@@ -107,41 +77,23 @@ module.exports = function(controller) {
 
 function buildFoundResponse(imageUrl, objectUrl, searchTerm, userName) {
     var response = {};
-    response.text = '<' + imageUrl + '|' + decodeURI(searchTerm) + '> requested by ' + userName + ' (' + '<' + objectUrl + '|learn more>)';
+    response.text = '<' + imageUrl + '|' + decodeURI(searchTerm) + '> requested by ' + userName + ' (' + '<' + '' + '|learn more>)';
             
-    //console.log(response);
-
     return response;
 }
 
-function sendPublicBlocks(bot, message, searchTerm, imageUrl) {
-
-    bot.replyPublic(message, 'selected!');
-
-    /*bot.replyPublic(message, {
-        "blocks": [
-            {
-                "type": "image",
-                "title": {
-                    "type": "plain_text",
-                    "text": "Example Image",
-                    "emoji": true
-                },
-                "image_url": imageUrl,
-                "alt_text": "monet"
-            }
-        ]
-      });*/ 
-
-}
-
-//let inmemmessage;
-
 async function sendInteractiveDialog(bot, message, searchTerm, objectData) {
 
-    //inmemmessage = message;
+    var sendData = {
+        imageUrl: objectData.primaryImageSmall,
+        objectUrl: objectData.objectURL,
+        searchTerm: searchTerm,
+        userName: message.user_name
+    };
 
-    await bot.replyPublic(message, {
+    console.log(sendData);
+
+    await bot.replyInteractive(message, {
         "blocks": [
             {
                 "type": "image",
@@ -161,10 +113,9 @@ async function sendInteractiveDialog(bot, message, searchTerm, objectData) {
                         "text": {
                             "type": "plain_text",
                             "emoji": true,
-                            "text": "Select"
+                            "text": "Send"
                         },
-                        "style": "primary",
-                        "value": "select " + objectData.primaryImageSmall
+                        "value": "select " + JSON.stringify(sendData)
                     },
                     {
                         "type": "button",
@@ -173,7 +124,6 @@ async function sendInteractiveDialog(bot, message, searchTerm, objectData) {
                             "emoji": true,
                             "text": "Shuffle"
                         },
-                        "style": "primary",
                         "value": "shuffle " + searchTerm
                     },
                     {
@@ -189,23 +139,6 @@ async function sendInteractiveDialog(bot, message, searchTerm, objectData) {
                 ]
             }		
         ]
-      }); 
-
-      //console.log(message);
-
-      let messageToDelete = {};
-      messageToDelete.id = message.incoming_message.id;
-      messageToDelete.conversation = message.incoming_message.conversation;
-
-      //console.log(messageToDelete);
-
-      //await bot.deleteMessage(messageToDelete);*/
-
-      //await bot.replyPublic(message, 'test');
-
-      //await bot.deleteMessage(messageToDelete);
-
-
-      //bot.reply(message, 'test2');
+      });      
 
 }
