@@ -14,9 +14,9 @@ module.exports = function(controller) {
 
     controller.on('slash_command', async(bot, message) => {
 
-        console.log('slash command');
+        //console.log('slash command');
 
-        console.log(message);
+        //console.log(message);
 
         if (message.command === "/oa") {
             
@@ -26,8 +26,8 @@ module.exports = function(controller) {
 
             let objectData = await CollectionApiService.getObjectById(selectedObjectId);
 
-            console.log('got an object');
-            console.log(selectedObjectId);
+            //console.log('got an object');
+            //console.log(selectedObjectId);
 
             //var response = buildFoundResponse(objectData.primaryImageSmall, objectData.objectURL, searchTerm, message.user_name);
 
@@ -42,10 +42,12 @@ module.exports = function(controller) {
     // receive an interactive message, and reply with a message that will replace the original
     controller.on('block_actions', async(bot, message) => {
 
-        console.log('block action! ' + message.text);
+        console.log(inmemmessage);
 
-        console.log(message);
-        console.log(message._activity);
+        //console.log('block action! ' + message.text);
+
+        //console.log(message);
+        //console.log(message._activity);
 
         if (message.text.includes('select ')) {
 
@@ -74,8 +76,8 @@ module.exports = function(controller) {
             message.id = activityId;
             message.conversation = message.incoming_message.conversation;
 
-            console.log(message.id);
-            console.log(message.conversation);
+            //console.log(message.id);
+            //console.log(message.conversation);
 
             bot.deleteMessage(message);
 
@@ -89,7 +91,7 @@ function buildFoundResponse(imageUrl, objectUrl, searchTerm, userName) {
     var response = {};
     response.text = '<' + imageUrl + '|' + decodeURI(searchTerm) + '> requested by ' + userName + ' (' + '<' + objectUrl + '|learn more>)';
             
-    console.log(response);
+    //console.log(response);
 
     return response;
 }
@@ -113,9 +115,11 @@ function sendPublicBlocks(bot, message, searchTerm, imageUrl) {
 
 }
 
+let inmemmessage;
+
 function sendInteractiveDialog(bot, message, searchTerm, objectData) {
 
-    bot.replyInteractive(message, {
+    inmemmessage = bot.replyInteractive(message, {
         "blocks": [
             {
                 "type": "image",
