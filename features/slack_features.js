@@ -71,10 +71,10 @@ module.exports = function(controller) {
 
             const activityId = message.text.replace('cancel ', '');
 
-            message.activityId = activityId;
+            message.id = activityId;
             message.conversation = message.incoming_message.conversation;
 
-            console.log(message.activityId);
+            console.log(message.id);
             console.log(message.conversation);
 
             bot.deleteMessage(message);
