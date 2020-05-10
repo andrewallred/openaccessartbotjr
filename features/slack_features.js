@@ -33,7 +33,7 @@ module.exports = function(controller) {
 
             //bot.replyPublic(message,response);
 
-            sendInteractiveDialog(bot, message, searchTerm, objectData);
+            await sendInteractiveDialog(bot, message, searchTerm, objectData);
 
         }
 
@@ -68,7 +68,7 @@ module.exports = function(controller) {
 
             let objectData = await CollectionApiService.getObjectById(selectedObjectId);
             
-            sendInteractiveDialog(bot, message, searchTerm, objectData);
+            await sendInteractiveDialog(bot, message, searchTerm, objectData);
 
         } else if (message.text.includes('cancel ')) {
 
@@ -118,9 +118,9 @@ function sendPublicBlocks(bot, message, searchTerm, imageUrl) {
 
 let inmemmessage;
 
-function sendInteractiveDialog(bot, message, searchTerm, objectData) {
+async function sendInteractiveDialog(bot, message, searchTerm, objectData) {
 
-    inmemmessage = bot.replyInteractive(message, {
+    inmemmessage = await bot.replyInteractive(message, {
         "blocks": [
             {
                 "type": "image",
