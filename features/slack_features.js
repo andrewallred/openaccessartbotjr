@@ -42,6 +42,7 @@ module.exports = function(controller) {
     // receive an interactive message, and reply with a message that will replace the original
     controller.on('block_actions', async(bot, message) => {
 
+        console.log("inmemmessage");
         console.log(inmemmessage);
 
         //console.log('block action! ' + message.text);
