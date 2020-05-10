@@ -52,7 +52,7 @@ module.exports = function(controller) {
 
             let response = buildFoundResponse(imageUrl, '', '', '');
 
-            bot.replyPublic(message, response);
+            bot.say(response);
 
         } else if (message.text.includes('shuffle ')) {
 
