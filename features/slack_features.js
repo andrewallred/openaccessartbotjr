@@ -52,7 +52,7 @@ module.exports = function(controller) {
 
             let response = buildFoundResponse(imageUrl, '', '', '');
 
-            bot.say(response);
+            bot.replyPublic(message, response);
 
         } else if (message.text.includes('shuffle ')) {
 
@@ -70,52 +70,6 @@ module.exports = function(controller) {
 
         }
         
-
-    });
-
-    controller.on('button', 'block_actions', async (bot, message) => console.log('Pressed button!'));
-
-    controller.on('interactive_message', async (bot, message) => {
-
-        console.log('INTERACTIVE MESSAGE', message);
-
-        switch(message.actions[0].name) {
-            case 'replace':
-                await bot.replyInteractive(message,'[ A previous message was successfully replaced with this less exciting one. ]');
-                break;
-            case 'dialog':
-                await bot.replyWithDialog(message, new SlackDialog('this is a dialog', '123', 'Submit', [
-                    {
-                        type: 'text',
-                        label: 'Field 1',
-                        name: 'field1',
-                    },
-                    {
-                        type: 'text',
-                        label: 'Field 2',
-                        name: 'field2',
-                    }
-                ]).notifyOnCancel(true).state('foo').asObject());
-                break;
-            default:
-                await bot.reply(message, 'Got a button click!');
-        }
-    });
-
-    controller.on('dialog_submission', async (bot, message) => {
-        await bot.reply(message, 'Got a dialog submission');
-
-        // Return an error to Slack
-        bot.dialogError([
-            {
-                "name": "field1",
-                "error": "there was an error in field1"
-            }
-        ])
-    });
-
-    controller.on('dialog_cancellation', async (bot, message) => {
-        await bot.reply(message, 'Got a dialog cancellation');
     });
 
 }
