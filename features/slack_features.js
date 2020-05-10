@@ -43,6 +43,7 @@ module.exports = function(controller) {
             await bot.startConversationInChannel(message.incoming_message.conversation.id, null);
 
             let response = buildFoundResponse(selectData.imageUrl, selectData.objectUrl, selectData.searchTerm, selectData.userName);
+            response.unfurl_links = false;
 
             await bot.say(response);
 
@@ -69,10 +70,12 @@ module.exports = function(controller) {
 }
 
 function buildFoundResponse(imageUrl, objectUrl, searchTerm, userName) {
+
     var response = {};
-    response.text = '<' + imageUrl + '|' + decodeURI(searchTerm) + '> requested by ' + userName + ' (' + '<' + '' + '|learn more>)';
+    response.text = '<' + imageUrl + '|' + decodeURI(searchTerm) + '> requested by ' + userName + ' (' + '<' + objectUrl + '|learn more>)';
             
     return response;
+
 }
 
 async function sendInteractiveDialog(bot, message, searchTerm, objectData, userName) {
