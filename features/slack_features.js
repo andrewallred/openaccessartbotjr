@@ -36,16 +36,13 @@ module.exports = function(controller) {
 
             const selectData = JSON.parse(message.text.replace('select ', ''));
 
-            let deleteUrl = message.incoming_message.channelData.response_url;
-
-            SlackApiService.deleteEphemeralMessage(deleteUrl);
-
-            await bot.startConversationInChannel(message.incoming_message.conversation.id, null);
+            let responseUrl = message.incoming_message.channelData.response_url;
 
             let response = buildFoundResponse(selectData.imageUrl, selectData.objectUrl, selectData.searchTerm, selectData.userName);
-            response.unfurl_links = false;
+        
+            SlackApiService.respondPubliclyToEphemeralMessage(responseUrl, response);
 
-            await bot.say(response);
+            
 
         } else if (message.text.includes('shuffle ')) {
 
@@ -71,10 +68,7 @@ module.exports = function(controller) {
 
 function buildFoundResponse(imageUrl, objectUrl, searchTerm, userName) {
 
-    var response = {};
-    response.text = '<' + imageUrl + '|' + decodeURI(searchTerm) + '> requested by ' + userName + ' (' + '<' + objectUrl + '|learn more>)';
-            
-    return response;
+    return '<' + imageUrl + '|' + decodeURI(searchTerm) + '> requested by ' + userName + ' (' + '<' + objectUrl + '|learn more>)';
 
 }
 
