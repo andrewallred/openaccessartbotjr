@@ -50,7 +50,9 @@ module.exports = function(controller) {
 
             const imageUrl = message.text.replace('select ', '');
 
-            buildFoundResponse(imageUrl, '', '', '');
+            let response = buildFoundResponse(imageUrl, '', '', '');
+
+            bot.replyPublic(message, response);
 
         } else if (message.text.includes('shuffle ')) {
 
