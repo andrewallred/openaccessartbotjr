@@ -74,6 +74,9 @@ module.exports = function(controller) {
             message.activityId = activityId;
             message.conversation = message.incoming_message.conversation;
 
+            console.log(message.activityId);
+            console.log(message.conversation);
+
             bot.deleteMessage(message);
 
         }
