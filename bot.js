@@ -57,7 +57,7 @@ const controller = new Botkit({
 
     adapter: adapter,
 
-    storage
+    storage: mongoStorage
 });
 
 if (process.env.CMS_URI) {
