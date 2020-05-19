@@ -23,6 +23,7 @@ let storage = null;
 if (process.env.MONGO_URI) {
     storage = mongoStorage = new MongoDbStorage({
         url : process.env.MONGO_URI,
+        db: "heroku_sq60p3vj"
     });
 }
 
