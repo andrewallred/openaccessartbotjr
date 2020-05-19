@@ -104,11 +104,17 @@ controller.webserver.get('/', (req, res) => {
 
 
 controller.webserver.get('/install', (req, res) => {
+
+    console.log("install");
+
     // getInstallLink points to slack's oauth endpoint and includes clientId and scopes
     res.redirect(controller.adapter.getInstallLink());
 });
 
 controller.webserver.get('/install/auth', async (req, res) => {
+
+    console.log("install/auth");
+
     try {
         const results = await controller.adapter.validateOauthCode(req.query.code);
 
