@@ -123,9 +123,13 @@ controller.webserver.get('/install/auth', async (req, res) => {
 
         console.log('FULL OAUTH DETAILS', results);
 
-        await DbService.saveTeam(results.team.id, results.access_token, results.bot_user_id);
+        let team = await DbService.getTeamById(results.team.id);
 
-        let team = await DbService.getTeamById(results.team_id);
+        if (team == null) {
+            await DbService.saveTeam(results.team.id, results.access_token, results.bot_user_id);
+        }
+
+        team = await DbService.getTeamById(results.team.id);
 
         // Store token by team in bot state.
         tokenCache[results.team_id] = results.access_token;   
