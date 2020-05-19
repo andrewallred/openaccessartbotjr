@@ -1,10 +1,10 @@
-var MongoClient = require('mongodb').MongoClient;
+let MongoClient = require('mongodb').MongoClient;
 
 module.exports = { getTeamById, saveTeam }
 
 async function saveTeam(teamId, botAccessToken, botUserId) {
 
-    var MongoClient = require('mongodb').MongoClient;
+    let MongoClient = require('mongodb').MongoClient;
 
     await MongoClient.connect(process.env.MONGO_URI, async (err, db) => {
 
@@ -30,12 +30,9 @@ async function getTeamById(teamId) {
     const client = await MongoClient.connect(process.env.MONGO_URI);
 
     const db = client.db("heroku_sq60p3vj");
-    var query = { TeamId: teamId };
-    console.log(query);
+    let query = { TeamId: teamId };
     let temp = await db.collection("Teams").findOne(query);
 
-    console.log(temp);
-    
     team = temp;
 
     return team;

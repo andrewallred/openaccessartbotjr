@@ -23,7 +23,7 @@ module.exports = function(controller) {
 
             if (selectedObjectId == null) {
 
-                var response = buildNotFoundResponse("https://images.metmuseum.org/CRDImages/dp/web-large/DP815335.jpg", searchTerm, message.user_name);
+                let response = buildNotFoundResponse("https://images.metmuseum.org/CRDImages/dp/web-large/DP815335.jpg", searchTerm, message.user_name);
                 
                 let responseUrl = message.incoming_message.channelData.response_url;
                 SlackApiService.respondPubliclyToEphemeralMessage(responseUrl, response);
@@ -91,7 +91,7 @@ function buildNotFoundResponse(imageUrl, searchTerm, userName) {
 
 async function sendInteractiveDialog(bot, message, searchTerm, objectData, userName) {
 
-    var sendData = {
+    let sendData = {
         imageUrl: objectData.primaryImageSmall,
         objectUrl: objectData.objectURL,
         searchTerm: searchTerm,
@@ -120,6 +120,7 @@ async function sendInteractiveDialog(bot, message, searchTerm, objectData, userN
                             "emoji": true,
                             "text": "Send"
                         },
+                        "style": "primary",
                         "value": "select " + JSON.stringify(sendData)
                     },
                     {
@@ -138,7 +139,6 @@ async function sendInteractiveDialog(bot, message, searchTerm, objectData, userN
                             "emoji": true,
                             "text": "Cancel"
                         },
-                        "style": "danger",
                         "value": "cancel " + message.reference.activityId
                     }
                 ]

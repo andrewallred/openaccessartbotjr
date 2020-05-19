@@ -97,7 +97,7 @@ controller.ready(() => {
 
 controller.webserver.get('/', (req, res) => {
 
-    res.send(`This app is running Botkit ${ controller.version }.`);
+    res.send(`hello world!`);
 
 });
 
@@ -108,8 +108,6 @@ controller.webserver.get('/', (req, res) => {
 
 controller.webserver.get('/install', (req, res) => {
 
-    console.log("install");
-
     // getInstallLink points to slack's oauth endpoint and includes clientId and scopes
     res.redirect(controller.adapter.getInstallLink());
 
@@ -117,12 +115,10 @@ controller.webserver.get('/install', (req, res) => {
 
 controller.webserver.get('/install/auth', async (req, res) => {
 
-    console.log("install/auth");
-
     try {
         const results = await controller.adapter.validateOauthCode(req.query.code);
 
-        console.log('FULL OAUTH DETAILS', results);
+        //console.log('FULL OAUTH DETAILS', results);
 
         let team = await DbService.getTeamById(results.team.id);
 
@@ -145,18 +141,12 @@ async function getTokenForTeam(teamId) {
 
     try {
 
-        console.log("getTokenForTeam");
-
-        console.log(DbService);
-
         let team = await DbService.getTeamById(teamId);
 
         if (team == null) {
             console.error("team not found " + teamId);
             return null;
         }
-
-        console.log("team found");
 
         return Promise.resolve(team.BotAccessToken);
 
@@ -168,10 +158,6 @@ async function getTokenForTeam(teamId) {
 }
 
 async function getBotUserByTeam(teamId) {
-
-    console.log("getBotUserByTeam");
-
-    console.log(DbService);
 
     let team = await DbService.getTeamById(teamId);
 

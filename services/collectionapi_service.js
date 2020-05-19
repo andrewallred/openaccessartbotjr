@@ -9,13 +9,22 @@ const baseObjectUrl = 'https://collectionapi.metmuseum.org/public/collection/v1/
 const noResultsUrl = 'https://images.metmuseum.org/CRDImages/dp/web-large/DP815335.jpg';
 const filter = " -nude -naked";
 
-async function getObjectForSearchTerm(searchTerm, getTopResult) {
+async function getObjectForSearchTerm(searchTerm) {
 
-    var getTopResult = searchTerm.includes("#top ");
+    let getTopResult = searchTerm.includes("#top ");
 
     if (getTopResult) {
         searchTerm = searchTerm.replace("#top ", "");
     }
+
+    searchTerm = encodeURIComponent(searchTerm);
+    console.log("encoded searchTerm is ");
+    console.log(searchTerm);
+
+    // need to replace the annoying curly quotes post-encoding
+    // if someone else wants to do this in a non-terrible way please do
+    searchTerm = searchTerm.replace("%E2%80%9C", "\"");
+    searchTerm = searchTerm.replace("%E2%80%9D", "\"");
 
     const searchUrl = baseSearchUrl + searchTerm + filter;
     
