@@ -138,7 +138,7 @@ controller.webserver.get('/install/auth', async (req, res) => {
         console.log(tokenCache);
 
         // Capture team to bot id
-        userCache[results.team_id] =  results.bot.bot_user_id;
+        userCache[results.team_id] =  results.bot_user_id;
 
         res.json('Success! Bot installed.');
 
