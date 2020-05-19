@@ -29,7 +29,7 @@ async function getTeamById(teamId) {
 
     const client = await MongoClient.connect(process.env.MONGO_URI);
 
-    const db = client.db(dbName);
+    const db = client.db("heroku_sq60p3vj");
     var dbo = db.db("heroku_sq60p3vj");
     var query = { TeamId: teamId };
     console.log(query);
@@ -40,7 +40,7 @@ async function getTeamById(teamId) {
         if (err) throw err;
         team = result;
         db.close();
-        
+
     });
 
     return team;
