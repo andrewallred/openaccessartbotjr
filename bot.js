@@ -20,11 +20,11 @@ const DbService = require('./services/db_service.js');
 require('dotenv').config();
 
 let storage = null;
-/*if (process.env.MONGO_URI) {
+if (process.env.MONGO_URI) {
     storage = mongoStorage = new MongoDbStorage({
         url : process.env.MONGO_URI,
     });
-}*/
+}
 
 const adapter = new SlackAdapter({
 
@@ -154,7 +154,7 @@ async function getTokenForTeam(teamId) {
             resolve(team.access_token);
         }, 150);
     });
-
+    
 }
 
 async function getBotUserByTeam(teamId) {
