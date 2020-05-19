@@ -36,15 +36,7 @@ async function getTeamById(teamId) {
 
     console.log(temp);
     
-    /*.toArray(function(err, result) {
-
-        console.log("finding");
-
-        if (err) throw err;
-        team = result;
-        client.close();
-
-    });*/
+    team = temp;
 
     return team;
 
