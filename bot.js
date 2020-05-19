@@ -149,7 +149,7 @@ async function getTokenForTeam(teamId) {
 
         console.log(DbService);
 
-        let team = await DbService.getTeamById(results.team.id);
+        let team = await DbService.getTeamById(teamId);
 
         if (team == null) {
             console.error("team not found " + teamId);
@@ -177,7 +177,7 @@ async function getBotUserByTeam(teamId) {
 
     console.log(DbService);
 
-    let team = await DbService.getTeamById(results.team.id);
+    let team = await DbService.getTeamById(teamId);
 
     if (team == null) {
         console.error("team not found " + teamId);
