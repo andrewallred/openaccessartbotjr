@@ -143,24 +143,31 @@ controller.webserver.get('/install/auth', async (req, res) => {
 
 async function getTokenForTeam(teamId) {
 
-    console.log("getTokenForTeam");
+    try {
 
-    console.log(DbService);
+        console.log("getTokenForTeam");
 
-    let team = await DbService.getTeamById(results.team.id);
+        console.log(DbService);
 
-    if (team == null) {
-        console.error("team not found " + teamId);
-        return null;
+        let team = await DbService.getTeamById(results.team.id);
+
+        if (team == null) {
+            console.error("team not found " + teamId);
+            return null;
+        }
+
+        console.log("team found");
+
+        return new Promise((resolve) => {
+            setTimeout(function() {
+                resolve(team.access_token);
+            }, 150);
+        });
+
+    } catch (err) {
+        console.log(err);
+        throw err;
     }
-
-    console.log("team found");
-
-    return new Promise((resolve) => {
-        setTimeout(function() {
-            resolve(team.access_token);
-        }, 150);
-    });
     
 }
 
