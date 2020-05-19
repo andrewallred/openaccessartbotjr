@@ -24,8 +24,6 @@ if (process.env.MONGO_URI) {
     storage = mongoStorage = new MongoDbStorage({
         url : process.env.MONGO_URI,
     });
-
-    // need a build
 }
 
 const adapter = new SlackAdapter({
