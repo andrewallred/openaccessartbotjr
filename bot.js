@@ -158,11 +158,7 @@ async function getTokenForTeam(teamId) {
 
         console.log("team found");
 
-        return new Promise((resolve) => {
-            setTimeout(function() {
-                resolve(team.access_token);
-            }, 150);
-        });
+        return Promise.resolve(team.access_token);
 
     } catch (err) {
         console.log(err);
