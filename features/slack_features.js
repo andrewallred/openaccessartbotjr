@@ -20,7 +20,7 @@ module.exports = function(controller) {
             
             const searchTerm = message.text;
 
-            var slangTerms = DbService.getTermsForSlang(searchTerm);
+            var slangTerms = await DbService.getTermsForSlang(searchTerm);
             console.log(slangTerms);
             if (slangTerms && slangTerms.Length > 0) {
                 searchTerm = slangTerms[Math.floor(Math.random() * slangTerms.Length)];
