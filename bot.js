@@ -143,6 +143,8 @@ controller.webserver.get('/install/auth', async (req, res) => {
 
 async function getTokenForTeam(teamId) {
 
+    console.log(getTokenForTeam);
+
     let team = await DbService.getTeamById(results.team.id);
 
     if (team == null) {
@@ -159,6 +161,8 @@ async function getTokenForTeam(teamId) {
 }
 
 async function getBotUserByTeam(teamId) {
+
+    console.log(getBotUserByTeam);
 
     let team = await DbService.getTeamById(results.team.id);
 
