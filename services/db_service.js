@@ -34,6 +34,7 @@ async function getTeamById(teamId) {
         if (err) throw err;
         var dbo = db.db("heroku_sq60p3vj");
         var query = { TeamId: teamId };
+        console.log(query);
         dbo.collection("Teams").find(query).toArray(function(err, result) {
             if (err) throw err;
             team = result;
