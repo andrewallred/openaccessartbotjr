@@ -1,6 +1,6 @@
 let MongoClient = require('mongodb').MongoClient;
 
-module.exports = { getTeamById, saveTeam }
+module.exports = { getTeamById, saveTeam, getTermsForSlang }
 
 async function saveTeam(teamId, botAccessToken, botUserId) {
 
@@ -36,5 +36,27 @@ async function getTeamById(teamId) {
     team = temp;
 
     return team;
+
+}
+
+async function getTermsForSlang(slang) {
+
+    slang = encodeURIComponent(slang);
+
+    console.log("getting slang " + slang);
+
+    let slangTerms;
+
+    const client = await MongoClient.connect(process.env.MONGO_URI);
+
+    const db = client.db("heroku_sq60p3vj");
+    let query = { Slang: slang };
+    let temp = await db.collection("Slang").findOne(query);
+
+    if (temp) {
+        slangTerms = temp.Terms;
+    }
+
+    return slangTerms;
 
 }

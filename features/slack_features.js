@@ -6,6 +6,7 @@ const { SlackDialog } = require('botbuilder-adapter-slack');
 
 const CollectionApiService = require('../services/collectionapi_service.js');
 const SlackApiService = require('../services/slackapi_service.js');
+const DbService = require('../services/db_service.js');
 
 module.exports = function(controller) {
 
@@ -18,6 +19,11 @@ module.exports = function(controller) {
         if (message.command === "/oa") {
             
             const searchTerm = message.text;
+
+            var slangTerms = DbService.getTermsForSlang(searchTerm);
+            if (slangTerms && slangTerms.Length > 0) {
+                searchTerm = slangTerms[Math.floor(Math.random() * slangTerms.Length)];
+            }
 
             let selectedObjectId = await CollectionApiService.getObjectForSearchTerm(searchTerm);
 
