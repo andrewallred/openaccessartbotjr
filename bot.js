@@ -14,6 +14,8 @@ const { SlackAdapter, SlackMessageTypeMiddleware, SlackEventMiddleware } = requi
 
 const { MongoDbStorage } = require('botbuilder-storage-mongodb');
 
+const DbService = require('./services/db_service.js');
+
 // Load process.env values from .env file
 require('dotenv').config();
 
@@ -111,6 +113,10 @@ controller.webserver.get('/install/auth', async (req, res) => {
         const results = await controller.adapter.validateOauthCode(req.query.code);
 
         console.log('FULL OAUTH DETAILS', results);
+
+        await saveTeam(results.team_id, results.bot.bot_access_token, results.bot.bot_user_id);
+
+        let team = await getTeamByTeamId(results.team_id);
 
         // Store token by team in bot state.
         tokenCache[results.team_id] = results.bot.bot_access_token;   
