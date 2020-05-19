@@ -179,11 +179,7 @@ async function getBotUserByTeam(teamId) {
         console.error("team not found " + teamId);
     }
 
-    return new Promise((resolve) => {
-        setTimeout(function() {
-            resolve(team.bot_user_id);
-        }, 150);
-    });
+    return Promise.resolve(team.BotUserId);
 
 }
 
