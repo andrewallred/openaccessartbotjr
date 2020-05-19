@@ -125,7 +125,7 @@ controller.webserver.get('/install/auth', async (req, res) => {
 
         await DbService.saveTeam(results.team.id, results.access_token, results.bot_user_id);
 
-        let team = await DbService.getTeamByTeamId(results.team_id);
+        let team = await DbService.getTeamById(results.team_id);
 
         // Store token by team in bot state.
         tokenCache[results.team_id] = results.access_token;   
