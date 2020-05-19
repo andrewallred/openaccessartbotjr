@@ -32,7 +32,11 @@ async function getTeamById(teamId) {
     const db = client.db("heroku_sq60p3vj");
     var query = { TeamId: teamId };
     console.log(query);
-    await db.collection("Teams").find(query).toArray(function(err, result) {
+    let temp = db.collection("Teams").findOne(query);
+
+    console.log(temp);
+    
+    /*.toArray(function(err, result) {
 
         console.log("finding");
 
@@ -40,7 +44,7 @@ async function getTeamById(teamId) {
         team = result;
         client.close();
 
-    });
+    });*/
 
     return team;
 
