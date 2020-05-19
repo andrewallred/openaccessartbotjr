@@ -33,7 +33,7 @@ const adapter = new SlackAdapter({
     clientSigningSecret: process.env.CLIENT_SIGNING_SECRET,  
 
     // auth token for a single-team app
-    botToken: process.env.BOT_TOKEN,
+    // botToken: process.env.BOT_TOKEN,
 
     // credentials used to set up oauth for multi-team apps
     clientId: process.env.CLIENT_ID,
@@ -109,6 +109,7 @@ controller.webserver.get('/install', (req, res) => {
 
     // getInstallLink points to slack's oauth endpoint and includes clientId and scopes
     res.redirect(controller.adapter.getInstallLink());
+
 });
 
 controller.webserver.get('/install/auth', async (req, res) => {
