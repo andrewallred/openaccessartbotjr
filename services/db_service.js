@@ -27,26 +27,22 @@ async function getTeamById(teamId) {
 
     let team;
 
-    await MongoClient.connect(process.env.MONGO_URI, async (err, db) => {
+    const client = await MongoClient.connect(process.env.MONGO_URI);
 
-        console.log("connecting to db");
+    const db = client.db(dbName);
+    var dbo = db.db("heroku_sq60p3vj");
+    var query = { TeamId: teamId };
+    console.log(query);
+    dbo.collection("Teams").find(query).toArray(function(err, result) {
+
+        console.log("finding");
 
         if (err) throw err;
-        var dbo = db.db("heroku_sq60p3vj");
-        var query = { TeamId: teamId };
-        console.log(query);
-        dbo.collection("Teams").find(query).toArray(function(err, result) {
-            if (err) throw err;
-            team = result;
-            db.close();
-        });
-
+        team = result;
+        db.close();
+        
     });
 
     return team;
-
-}
-
-function getBotUserByTeam(teamId) {
 
 }
