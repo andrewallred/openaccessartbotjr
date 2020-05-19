@@ -131,15 +131,6 @@ controller.webserver.get('/install/auth', async (req, res) => {
 
         team = await DbService.getTeamById(results.team.id);
 
-        // Store token by team in bot state.
-        tokenCache[results.team_id] = results.access_token;   
-        
-        console.log('tokenCache');
-        console.log(tokenCache);
-
-        // Capture team to bot id
-        userCache[results.team_id] =  results.bot_user_id;
-
         res.json('Success! Bot installed.');
 
     } catch (err) {
@@ -149,38 +140,36 @@ controller.webserver.get('/install/auth', async (req, res) => {
     }
 });
 
-let tokenCache = {};
-let userCache = {};
-
-if (process.env.TOKENS) {
-    tokenCache = JSON.parse(process.env.TOKENS);
-} 
-
-if (process.env.USERS) {
-    userCache = JSON.parse(process.env.USERS);
-} 
-
 async function getTokenForTeam(teamId) {
-    if (tokenCache[teamId]) {
-        return new Promise((resolve) => {
-            setTimeout(function() {
-                resolve(tokenCache[teamId]);
-            }, 150);
-        });
-    } else {
-        console.error('Team not found in tokenCache: ', teamId);
+
+    let team = await DbService.getTeamById(results.team.id);
+
+    if (team == null) {
+        console.error("team not found " + teamId);
+        return null;
     }
+
+    return new Promise((resolve) => {
+        setTimeout(function() {
+            resolve(team.access_token);
+        }, 150);
+    });
+    
 }
 
 async function getBotUserByTeam(teamId) {
-    if (userCache[teamId]) {
-        return new Promise((resolve) => {
-            setTimeout(function() {
-                resolve(userCache[teamId]);
-            }, 150);
-        });
-    } else {
-        console.error('Team not found in userCache: ', teamId);
+
+    let team = await DbService.getTeamById(results.team.id);
+
+    if (team == null) {
+        console.error("team not found " + teamId);
     }
+
+    return new Promise((resolve) => {
+        setTimeout(function() {
+            resolve(team.bot_user_id);
+        }, 150);
+    });
+
 }
 
