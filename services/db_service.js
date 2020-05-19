@@ -38,7 +38,7 @@ async function getTeamById(teamId) {
 
         if (err) throw err;
         team = result;
-        db.close();
+        client.close();
 
     });
 
