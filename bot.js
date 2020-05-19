@@ -158,7 +158,7 @@ async function getTokenForTeam(teamId) {
 
         console.log("team found");
 
-        return Promise.resolve(team.BotAccessToken:);
+        return Promise.resolve(team.BotAccessToken);
 
     } catch (err) {
         console.log(err);
