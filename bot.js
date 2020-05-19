@@ -143,7 +143,7 @@ controller.webserver.get('/install/auth', async (req, res) => {
 
 async function getTokenForTeam(teamId) {
 
-    console.log(getTokenForTeam);
+    console.log("getTokenForTeam");
 
     console.log(DbService);
 
@@ -153,6 +153,8 @@ async function getTokenForTeam(teamId) {
         console.error("team not found " + teamId);
         return null;
     }
+
+    console.log("team found");
 
     return new Promise((resolve) => {
         setTimeout(function() {
@@ -164,7 +166,7 @@ async function getTokenForTeam(teamId) {
 
 async function getBotUserByTeam(teamId) {
 
-    console.log(getBotUserByTeam);
+    console.log("getBotUserByTeam");
 
     console.log(DbService);
 
