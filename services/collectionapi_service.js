@@ -47,6 +47,7 @@ async function getObjectForSearchTerm(searchTerm) {
     }
 
     console.log('selecting an object for searchTerm: ' + searchTerm);
+    console.log('number of results ' + data.total);
 
     // select an object
     let objectIndex = 0;
