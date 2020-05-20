@@ -7,7 +7,7 @@ const axios = require('axios').default;
 const baseSearchUrl = 'https://collectionapi.metmuseum.org/public/collection/v1/search?q=';
 const baseObjectUrl = 'https://collectionapi.metmuseum.org/public/collection/v1/objects/';
 const noResultsUrl = 'https://images.metmuseum.org/CRDImages/dp/web-large/DP815335.jpg';
-const filter = " -nude -naked";
+const filter = "";
 
 async function getObjectForSearchTerm(searchTerm) {
 
