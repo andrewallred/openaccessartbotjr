@@ -17,22 +17,36 @@ module.exports = function(controller) {
 
         if (message.command === "/oa") {
 
-            let searchTerm = message.text;
+            try {
 
-            let selectedObjectId = await CollectionApiService.getObjectForSearchTerm(searchTerm);
+                let searchTerm = message.text;
 
-            if (selectedObjectId == null) {
+                let selectedObjectId = await CollectionApiService.getObjectForSearchTerm(searchTerm);
 
-                let response = buildNotFoundResponse("https://images.metmuseum.org/CRDImages/dp/web-large/DP815335.jpg", searchTerm, message.user_name);
+                if (selectedObjectId == null) {
+
+                    let response = buildNotFoundResponse("https://images.metmuseum.org/CRDImages/dp/web-large/DP815335.jpg", searchTerm, message.user_name);
+                    
+                    let responseUrl = message.incoming_message.channelData.response_url;
+                    SlackApiService.respondPubliclyToEphemeralMessage(responseUrl, response);
+
+                } else {
+
+                    let objectData = await CollectionApiService.getObjectById(selectedObjectId);
+
+                    await sendInteractiveDialog(bot, message, searchTerm, objectData, message.user_name);
+
+                }
+
+            } catch (err) {
                 
+                console.log("An error occurred ");
+                console.log(err);
+
+                let response = buildSomethingWentWrongResponse("https://images.metmuseum.org/CRDImages/dp/web-large/DP835005.jpg", searchTerm, message.user_name);
+                    
                 let responseUrl = message.incoming_message.channelData.response_url;
                 SlackApiService.respondPubliclyToEphemeralMessage(responseUrl, response);
-
-            } else {
-
-                let objectData = await CollectionApiService.getObjectById(selectedObjectId);
-
-                await sendInteractiveDialog(bot, message, searchTerm, objectData, message.user_name);
 
             }
 
@@ -89,6 +103,12 @@ function buildFoundResponse(imageUrl, objectUrl, searchTerm, userName) {
 function buildNotFoundResponse(imageUrl, searchTerm, userName) {
 
     return searchTerm + ' not found, enjoy some <' + imageUrl + '|cats> instead, requested by ' + userName;
+
+}
+
+function buildSomethingWentWrongResponse(imageUrl, searchTerm, userName) {
+
+    return 'something went wrong! <' + imageUrl + '|try again>';
 
 }
 
