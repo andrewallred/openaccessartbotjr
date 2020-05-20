@@ -26,6 +26,7 @@ module.exports = function(controller) {
             console.log(slangTerms);
             if (slangTerms && slangTerms.length > 0) {
                 searchTerm = slangTerms[Math.floor(Math.random() * slangTerms.length)];
+                searchTerm = "\"" + searchTerm + "\"";
             }
 
             let selectedObjectId = await CollectionApiService.getObjectForSearchTerm(searchTerm);
