@@ -69,8 +69,9 @@ async function saveSearchTerm(searchTerm, objectUrl) {
 
         if (err) throw err;
         let dbo = db.db("heroku_sq60p3vj");
-        let team = { SearchTerm: encodeURIComponent(searchTerm), ObjectUrl: objectUrl };
-        dbo.collection("SearchTerms").insertOne(team, function(err, res) {
+        let term = { SearchTerm: encodeURIComponent(searchTerm), ObjectUrl: objectUrl };
+        console.log(term);
+        dbo.collection("SearchTerms").insertOne(term, function(err, res) {
             if (err) throw err;
             console.log("1 document inserted");
             db.close();
