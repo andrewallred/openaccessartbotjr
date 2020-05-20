@@ -22,8 +22,8 @@ module.exports = function(controller) {
 
             var slangTerms = await DbService.getTermsForSlang(searchTerm);
             console.log(slangTerms);
-            if (slangTerms && slangTerms.Length > 0) {
-                searchTerm = slangTerms[Math.floor(Math.random() * slangTerms.Length)];
+            if (slangTerms && slangTerms.length > 0) {
+                searchTerm = slangTerms[Math.floor(Math.random() * slangTerms.length)];
             }
 
             let selectedObjectId = await CollectionApiService.getObjectForSearchTerm(searchTerm);
