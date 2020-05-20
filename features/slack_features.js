@@ -69,6 +69,9 @@ module.exports = function(controller) {
 
             const selectData = JSON.parse(message.text.replace('shuffle ', ''));
 
+            console.log("selectData is ");
+            console.log(selectData);
+
             let selectedObjectId = await CollectionApiService.getObjectForSearchTerm(selectData.searchTerm);
 
             let objectData = await CollectionApiService.getObjectById(selectedObjectId);
