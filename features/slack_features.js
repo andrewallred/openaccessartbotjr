@@ -18,9 +18,9 @@ module.exports = function(controller) {
 
         if (message.command === "/oa") {
 
-            const originalSearchTerm = searchTerm;
-            
             let searchTerm = message.text;
+
+            const originalSearchTerm = searchTerm;
 
             let slangTerms = await DbService.getTermsForSlang(searchTerm);
             console.log(slangTerms);
