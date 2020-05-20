@@ -18,9 +18,9 @@ module.exports = function(controller) {
 
         if (message.command === "/oa") {
             
-            const searchTerm = message.text;
+            let searchTerm = message.text;
 
-            var slangTerms = await DbService.getTermsForSlang(searchTerm);
+            let slangTerms = await DbService.getTermsForSlang(searchTerm);
             console.log(slangTerms);
             if (slangTerms && slangTerms.length > 0) {
                 searchTerm = slangTerms[Math.floor(Math.random() * slangTerms.length)];
