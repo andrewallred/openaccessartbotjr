@@ -17,6 +17,8 @@ module.exports = function(controller) {
     controller.on('slash_command', async(bot, message) => {
 
         if (message.command === "/oa") {
+
+            const originalSearchTerm = searchTerm;
             
             let searchTerm = message.text;
 
@@ -30,7 +32,7 @@ module.exports = function(controller) {
 
             if (selectedObjectId == null) {
 
-                let response = buildNotFoundResponse("https://images.metmuseum.org/CRDImages/dp/web-large/DP815335.jpg", searchTerm, message.user_name);
+                let response = buildNotFoundResponse("https://images.metmuseum.org/CRDImages/dp/web-large/DP815335.jpg", originalSearchTerm, message.user_name);
                 
                 let responseUrl = message.incoming_message.channelData.response_url;
                 SlackApiService.respondPubliclyToEphemeralMessage(responseUrl, response);
@@ -39,7 +41,7 @@ module.exports = function(controller) {
 
                 let objectData = await CollectionApiService.getObjectById(selectedObjectId);
 
-                await sendInteractiveDialog(bot, message, searchTerm, objectData, message.user_name);
+                await sendInteractiveDialog(bot, message, originalSearchTerm, objectData, message.user_name);
 
             }
 
