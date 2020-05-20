@@ -2,6 +2,8 @@
 
 module.exports = { getObjectForSearchTerm, getObjectById }
 
+const DbService = require('../services/db_service.js');
+
 const axios = require('axios').default;
 
 const baseSearchUrl = 'https://collectionapi.metmuseum.org/public/collection/v1/search?q=';
@@ -17,7 +19,16 @@ async function getObjectForSearchTerm(searchTerm) {
         searchTerm = searchTerm.replace("#top ", "");
     }
 
-    searchTerm = encodeURIComponent(searchTerm);
+    let slangTerms = await DbService.getTermsForSlang(searchTerm);
+    console.log(slangTerms);
+    if (slangTerms && slangTerms.length > 0) {
+        searchTerm = slangTerms[Math.floor(Math.random() * slangTerms.length)];
+        searchTerm = "\"" + searchTerm + "\"";
+    }
+    else {
+        searchTerm = encodeURIComponent(searchTerm);
+    }
+
     console.log("encoded searchTerm is ");
     console.log(searchTerm);
 
