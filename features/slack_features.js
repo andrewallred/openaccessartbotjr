@@ -6,6 +6,7 @@ const { SlackDialog } = require('botbuilder-adapter-slack');
 
 const CollectionApiService = require('../services/collectionapi_service.js');
 const SlackApiService = require('../services/slackapi_service.js');
+const DbService = require('../services/db_service.js');
 
 module.exports = function(controller) {
 
@@ -30,6 +31,8 @@ module.exports = function(controller) {
                     let responseUrl = message.incoming_message.channelData.response_url;
                     SlackApiService.respondPubliclyToEphemeralMessage(responseUrl, response);
 
+                    DbService.saveSearchTerm(searchTerm, null);
+
                 } else {
 
                     let objectData = await CollectionApiService.getObjectById(selectedObjectId);
@@ -39,7 +42,7 @@ module.exports = function(controller) {
                 }
 
             } catch (err) {
-                
+
                 console.log("An error occurred ");
                 console.log(err);
 
@@ -47,6 +50,8 @@ module.exports = function(controller) {
                     
                 let responseUrl = message.incoming_message.channelData.response_url;
                 SlackApiService.respondPubliclyToEphemeralMessage(responseUrl, response);
+
+                DbService.saveSearchTerm(searchTerm, null);
 
             }
 
@@ -67,7 +72,7 @@ module.exports = function(controller) {
         
             SlackApiService.respondPubliclyToEphemeralMessage(responseUrl, response);
 
-            
+            DbService.saveSearchTerm(searchTerm, selectData.objectUrl);
 
         } else if (message.text.includes('shuffle ')) {
 

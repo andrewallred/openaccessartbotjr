@@ -1,6 +1,6 @@
 let MongoClient = require('mongodb').MongoClient;
 
-module.exports = { getTeamById, saveTeam, getTermsForSlang }
+module.exports = { getTeamById, saveTeam, getTermsForSlang, saveSearchTerm }
 
 async function saveTeam(teamId, botAccessToken, botUserId) {
 
@@ -58,5 +58,24 @@ async function getTermsForSlang(slang) {
     }
 
     return slangTerms;
+
+}
+
+async function saveSearchTerm(searchTerm, objectUrl) {
+
+    let MongoClient = require('mongodb').MongoClient;
+
+    await MongoClient.connect(process.env.MONGO_URI, async (err, db) => {
+
+        if (err) throw err;
+        let dbo = db.db("heroku_sq60p3vj");
+        let team = { SearchTerm: encodeURIComponent(searchTerm), ObjectUrl: objectUrl };
+        dbo.collection("SearchTerms").insertOne(team, function(err, res) {
+            if (err) throw err;
+            console.log("1 document inserted");
+            db.close();
+        });
+
+    });
 
 }
