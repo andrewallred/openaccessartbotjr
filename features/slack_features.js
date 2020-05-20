@@ -72,7 +72,7 @@ module.exports = function(controller) {
         
             SlackApiService.respondPubliclyToEphemeralMessage(responseUrl, response);
 
-            DbService.saveSearchTerm(searchTerm, selectData.objectUrl);
+            DbService.saveSearchTerm(selectData.searchTerm, selectData.objectUrl);
 
         } else if (message.text.includes('shuffle ')) {
 
