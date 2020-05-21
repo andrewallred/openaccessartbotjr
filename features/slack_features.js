@@ -22,9 +22,9 @@ module.exports = function(controller) {
 
                 let searchTerm = message.text;
 
-                let selectedObjectId = await CollectionApiService.getObjectForSearchTerm(searchTerm);
+                let searchResult = await CollectionApiService.getObjectForSearchTerm(searchTerm);
 
-                if (selectedObjectId == null) {
+                if (searchResult == null || searchResult.SelectedObjectId == null) {
 
                     let response = buildNotFoundResponse("https://images.metmuseum.org/CRDImages/dp/web-large/DP815335.jpg", searchTerm, message.user_name);
                     
@@ -35,9 +35,9 @@ module.exports = function(controller) {
 
                 } else {
 
-                    let objectData = await CollectionApiService.getObjectById(selectedObjectId);
+                    let objectData = await CollectionApiService.getObjectById(searchResult.SelectedObjectId);
 
-                    await sendInteractiveDialog(bot, message, searchTerm, objectData, message.user_name);
+                    await sendInteractiveDialog(bot, message, searchTerm, objectData, message.user_name, searchResult.ResultsCount > 1);
 
                 }
 
@@ -81,11 +81,17 @@ module.exports = function(controller) {
             console.log("selectData is ");
             console.log(selectData);
 
-            let selectedObjectId = await CollectionApiService.getObjectForSearchTerm(selectData.searchTerm);
+            let searchResult = await CollectionApiService.getObjectForSearchTerm(selectData.searchTerm);
 
-            let objectData = await CollectionApiService.getObjectById(selectedObjectId);
-            
-            await sendInteractiveDialog(bot, message, selectData.searchTerm, objectData, selectData.userName);
+            if (searchResult != null && searchResult.SelectedObjectId != null) {
+
+                let objectData = await CollectionApiService.getObjectById(searchResult.SelectedObjectId);
+                
+                await sendInteractiveDialog(bot, message, selectData.searchTerm, objectData, selectData.userName, true);
+                
+            } else {
+                // TODO error!
+            }
 
         } else if (message.text.includes('cancel ')) {
 
@@ -117,7 +123,7 @@ function buildSomethingWentWrongResponse(imageUrl, searchTerm, userName) {
 
 }
 
-async function sendInteractiveDialog(bot, message, searchTerm, objectData, userName) {
+async function sendInteractiveDialog(bot, message, searchTerm, objectData, userName, allowShuffle) {
 
     let sendData = {
         imageUrl: objectData.primaryImageSmall,
@@ -126,7 +132,7 @@ async function sendInteractiveDialog(bot, message, searchTerm, objectData, userN
         userName: userName
     };
 
-    await bot.replyInteractive(message, {
+    let blocks = {
         "blocks": [
             {
                 "type": "image",
@@ -172,6 +178,11 @@ async function sendInteractiveDialog(bot, message, searchTerm, objectData, userN
                 ]
             }		
         ]
-      });      
+    };
+
+    // lazy
+    blocks.blocks[1].elements.splice(1, 1);
+
+    await bot.replyInteractive(message, blocks);      
 
 }

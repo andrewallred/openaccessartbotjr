@@ -61,11 +61,15 @@ async function getObjectForSearchTerm(searchTerm) {
         }
     }
     
-    let selectedObjectId = data.objectIDs[objectIndex];
+    let searchResults = {
+        SelectedObjectId: data.objectIDs[objectIndex],
+        ResultsCount: data.total
+    };
 
-    console.log('selected an object: ' + selectedObjectId);
+    console.log('selected an object: ');
+    console.log(searchResults);
 
-    return Promise.resolve(selectedObjectId);
+    return Promise.resolve(searchResults);
 
 }
 
