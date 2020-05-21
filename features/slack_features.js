@@ -180,8 +180,10 @@ async function sendInteractiveDialog(bot, message, searchTerm, objectData, userN
         ]
     };
 
-    // lazy
-    blocks.blocks[1].elements.splice(1, 1);
+    if (!allowShuffle) {
+        // lazy
+        blocks.blocks[1].elements.splice(1, 1);
+    }
 
     await bot.replyInteractive(message, blocks);      
 
