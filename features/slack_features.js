@@ -20,6 +20,8 @@ module.exports = function(controller) {
 
             try {
 
+                bot.replyAcknowledge();
+
                 let searchTerm = message.text;
 
                 let searchResult = await CollectionApiService.getObjectForSearchTerm(searchTerm);
