@@ -75,11 +75,7 @@ async function getObjectForSearchTerm(searchTerm) {
 
     let timeElapsed = endTime - startTime;
 
-    timeElapsed /= 1000;
-
-    // get seconds 
-    var timeElapsedInSeconds = Math.round(timeElapsed);
-    console.log("timeElapsedInSeconds " + timeElapsedInSeconds);
+    console.log('timeElapsed ' + timeElapsed);
 
     return Promise.resolve(searchResults);
 
