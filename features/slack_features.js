@@ -18,6 +18,8 @@ module.exports = function(controller) {
 
         if (message.command === "/oa") {
 
+            console.log(message);
+
             try {
 
                 let searchTerm = message.text;
