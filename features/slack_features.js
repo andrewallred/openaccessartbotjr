@@ -107,13 +107,13 @@ module.exports = function(controller) {
 
 function buildFoundResponse(imageUrl, objectUrl, searchTerm, userName) {
 
-    return '<' + imageUrl + '|' + decodeURI(searchTerm) + '> requested by ' + userName + ' (' + '<' + objectUrl + '|learn more>)';
+    return '<' + imageUrl + '|' + decodeURI(searchTerm) + '> requested by *' + userName + '* (' + '<' + objectUrl + '|learn more>)';
 
 }
 
 function buildNotFoundResponse(imageUrl, searchTerm, userName) {
 
-    return searchTerm + ' not found, enjoy some <' + imageUrl + '|cats> instead, requested by ' + userName;
+    return searchTerm + ' not found, enjoy some <' + imageUrl + '|cats> instead, requested by *' + userName + '*';
 
 }
 
