@@ -13,6 +13,8 @@ const filter = "";
 
 async function getObjectForSearchTerm(searchTerm) {
 
+    let startTime = new Date();
+
     let getTopResult = searchTerm.includes("#top ");
 
     if (getTopResult) {
@@ -20,7 +22,7 @@ async function getObjectForSearchTerm(searchTerm) {
     }
 
     let slangTerms = await DbService.getTermsForSlang(searchTerm);
-    console.log(slangTerms);
+    //console.log(slangTerms);
     if (slangTerms && slangTerms.length > 0) {
         searchTerm = slangTerms[Math.floor(Math.random() * slangTerms.length)];
         searchTerm = "\"" + searchTerm + "\"";
@@ -29,8 +31,8 @@ async function getObjectForSearchTerm(searchTerm) {
         searchTerm = encodeURIComponent(searchTerm);
     }
 
-    console.log("encoded searchTerm is ");
-    console.log(searchTerm);
+    //console.log("encoded searchTerm is ");
+    //console.log(searchTerm);
 
     // need to replace the annoying curly quotes post-encoding
     // if someone else wants to do this in a non-terrible way please do
@@ -46,8 +48,8 @@ async function getObjectForSearchTerm(searchTerm) {
         return null;
     }
 
-    console.log('selecting an object for searchTerm: ' + searchTerm);
-    console.log('number of results ' + data.total);
+    //console.log('selecting an object for searchTerm: ' + searchTerm);
+    //console.log('number of results ' + data.total);
 
     // select an object
     let objectIndex = 0;
@@ -66,8 +68,18 @@ async function getObjectForSearchTerm(searchTerm) {
         ResultsCount: data.total
     };
 
-    console.log('selected an object: ');
-    console.log(searchResults);
+    //console.log('selected an object: ');
+    //console.log(searchResults);
+
+    let endTime = new Date();
+
+    let timeElapsed = endTime - startTime;
+
+    timeElapsed /= 1000;
+
+    // get seconds 
+    var timeElapsedInSeconds = Math.round(timeElapsed);
+    console.log("timeElapsedInSeconds " + timeElapsedInSeconds);
 
     return Promise.resolve(searchResults);
 
@@ -77,7 +89,7 @@ async function getObjectById(objectId) {
 
     const objectUrl = baseObjectUrl + objectId;
 
-    console.log('getting object by id: ' + objectId);
+    //console.log('getting object by id: ' + objectId);
 
     return axios.get(objectUrl).then(results => Promise.resolve(results.data));
 

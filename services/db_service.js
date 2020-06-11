@@ -13,7 +13,7 @@ async function saveTeam(teamId, botAccessToken, botUserId) {
         let team = { TeamId: teamId, BotAccessToken: botAccessToken, BotUserId: botUserId };
         dbo.collection("Teams").insertOne(team, function(err, res) {
             if (err) throw err;
-            console.log("1 document inserted");
+            //console.log("1 document inserted");
             db.close();
         });
 
@@ -23,7 +23,7 @@ async function saveTeam(teamId, botAccessToken, botUserId) {
 
 async function getTeamById(teamId) {
 
-    console.log("getting team " + teamId);
+    //console.log("getting team " + teamId);
 
     let team;
 
@@ -43,7 +43,7 @@ async function getTermsForSlang(slang) {
 
     slang = encodeURIComponent(slang);
 
-    console.log("getting slang " + slang);
+    //console.log("getting slang " + slang);
 
     let slangTerms;
 
@@ -70,10 +70,10 @@ async function saveSearchTerm(searchTerm, objectUrl) {
         if (err) throw err;
         let dbo = db.db("heroku_sq60p3vj");
         let term = { SearchTerm: encodeURIComponent(searchTerm), ObjectUrl: objectUrl };
-        console.log(term);
+        //console.log(term);
         dbo.collection("SearchTerms").insertOne(term, function(err, res) {
             if (err) throw err;
-            console.log("1 document inserted");
+            //console.log("1 document inserted");
             db.close();
         });
 
