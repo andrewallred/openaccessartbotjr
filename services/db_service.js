@@ -96,7 +96,7 @@ async function getObjectForSearchTerm(searchTerm) {
     let skipCount = Math.floor(Math.random() * collectionCount);
     
     //let temp = collection.findOne(query);
-    let temp = await collection.findOne(query).limit(1).skip(skipCount);
+    let temp = await collection.find(query).limit(1).skip(skipCount);
 
     //console.log(temp);
 
