@@ -1,6 +1,6 @@
 let MongoClient = require('mongodb').MongoClient;
 
-module.exports = { getTeamById, saveTeam, getTermsForSlang, saveSearchTerm }
+module.exports = { getTeamById, saveTeam, getTermsForSlang, saveSearchTerm, getObjectForSearchTerm }
 
 async function saveTeam(teamId, botAccessToken, botUserId) {
 
@@ -61,7 +61,7 @@ async function getTermsForSlang(slang) {
 
 }
 
-async function saveSearchTerm(searchTerm, objectUrl) {
+async function saveSearchTerm(searchTerm, objectUrl, objectId) {
 
     let MongoClient = require('mongodb').MongoClient;
 
@@ -69,7 +69,7 @@ async function saveSearchTerm(searchTerm, objectUrl) {
 
         if (err) throw err;
         let dbo = db.db("heroku_sq60p3vj");
-        let term = { SearchTerm: encodeURIComponent(searchTerm), ObjectUrl: objectUrl };
+        let term = { SearchTerm: encodeURIComponent(searchTerm), ObjectUrl: objectUrl, ObjectId: objectId };
         //console.log(term);
         dbo.collection("SearchTerms").insertOne(term, function(err, res) {
             if (err) throw err;
@@ -78,5 +78,29 @@ async function saveSearchTerm(searchTerm, objectUrl) {
         });
 
     });
+
+}
+
+async function getObjectForSearchTerm(searchTerm) {
+
+    searchTerm = encodeURIComponent(searchTerm);
+
+    let selectedResult = {};
+
+    const client = await MongoClient.connect(process.env.MONGO_URI);
+
+    const db = client.db("heroku_sq60p3vj");
+    let query = { SearchTerm: searchTerm };
+    let temp = await db.collection("SearchTerms").findOne(query);
+
+    if (temp) {
+        if (temp.objectId != null) {
+            selectedResult.SelectedObjectId = temp.ObjectId;
+        } else if (temp.objectUrl != null) {
+            selectedResult.SelectedObjectId = temp.objectUrl.replace('https://www.metmuseum.org/art/collection/search/');
+        }
+    }
+
+    return selectedResult;
 
 }

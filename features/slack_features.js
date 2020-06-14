@@ -31,13 +31,13 @@ module.exports = function(controller) {
                     let responseUrl = message.incoming_message.channelData.response_url;
                     SlackApiService.respondPubliclyToEphemeralMessage(responseUrl, response);
 
-                    DbService.saveSearchTerm(searchTerm, null);
+                    DbService.saveSearchTerm(searchTerm, null, null);
 
                 } else {
 
                     let objectData = await CollectionApiService.getObjectById(searchResult.SelectedObjectId);
 
-                    await sendInteractiveDialog(bot, message, searchTerm, objectData, message.user_name, searchResult.ResultsCount > 1);
+                    await sendInteractiveDialog(bot, message, searchTerm, objectData, message.user_name, 1, searchResult.ResultsCount > 1);
 
                 }
 
@@ -51,7 +51,7 @@ module.exports = function(controller) {
                 let responseUrl = message.incoming_message.channelData.response_url;
                 SlackApiService.respondPubliclyToEphemeralMessage(responseUrl, response);
 
-                DbService.saveSearchTerm(searchTerm, null);
+                DbService.saveSearchTerm(searchTerm, null, null);
 
             }
 
@@ -72,7 +72,7 @@ module.exports = function(controller) {
         
             SlackApiService.respondPubliclyToEphemeralMessage(responseUrl, response);
 
-            DbService.saveSearchTerm(selectData.searchTerm, selectData.objectUrl);
+            DbService.saveSearchTerm(selectData.searchTerm, selectData.objectUrl, selectData.objectId);
 
         } else if (message.text.includes('shuffle ')) {
 
@@ -81,13 +81,20 @@ module.exports = function(controller) {
             //console.log("selectData is ");
             //console.log(selectData);
 
-            let searchResult = await CollectionApiService.getObjectForSearchTerm(selectData.searchTerm);
+            let searchResult;
+            if (selectData.attempt % 3 == 0) {
+                searchResult = await DbService.getObjectForSearchTerm(selectData.searchTerm);
+            }
+
+            if (searchResult == null || searchResult.SelectedObjectId == null) {
+                searchResult = await CollectionApiService.getObjectForSearchTerm(selectData.searchTerm);
+            }
 
             if (searchResult != null && searchResult.SelectedObjectId != null) {
 
                 let objectData = await CollectionApiService.getObjectById(searchResult.SelectedObjectId);
                 
-                await sendInteractiveDialog(bot, message, selectData.searchTerm, objectData, selectData.userName, true);
+                await sendInteractiveDialog(bot, message, selectData.searchTerm, objectData, selectData.userName, selectData.attempt, true);
                 
             } else {
                 // TODO error!
@@ -123,13 +130,15 @@ function buildSomethingWentWrongResponse(imageUrl, searchTerm, userName) {
 
 }
 
-async function sendInteractiveDialog(bot, message, searchTerm, objectData, userName, allowShuffle) {
+async function sendInteractiveDialog(bot, message, searchTerm, objectData, userName, attempt, allowShuffle) {
 
     let sendData = {
         imageUrl: objectData.primaryImageSmall,
         objectUrl: objectData.objectURL,
+        objectId: objectData.objectID,
         searchTerm: searchTerm,
-        userName: userName
+        userName: userName,
+        attempt: attempt
     };
 
     let blocks = {
