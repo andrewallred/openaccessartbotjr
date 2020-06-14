@@ -84,6 +84,9 @@ module.exports = function(controller) {
             let searchResult;
             if (selectData.attempt % 3 == 0) {
                 searchResult = await DbService.getObjectForSearchTerm(selectData.searchTerm);
+
+                console.log('looked up prior search result');
+                console.log(searchResult);
             }
 
             if (searchResult == null || searchResult.SelectedObjectId == null) {
