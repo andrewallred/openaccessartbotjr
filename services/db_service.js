@@ -93,7 +93,7 @@ async function getObjectForSearchTerm(searchTerm) {
     let query = { SearchTerm: searchTerm };
     let temp = await db.collection("SearchTerms").findOne(query);
 
-    console.log(temp);
+    //console.log(temp);
 
     if (temp) {
         if (temp.ObjectId != null) {
