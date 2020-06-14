@@ -93,6 +93,7 @@ async function getObjectForSearchTerm(searchTerm) {
     let query = { SearchTerm: searchTerm };
     let collection = db.collection("SearchTerms");
     let collectionCount = await collection.count(query);
+    console.log('prior search results ' + collectionCount);
     let skipCount = Math.floor(Math.random() * collectionCount);
     
     //let temp = collection.findOne(query);
