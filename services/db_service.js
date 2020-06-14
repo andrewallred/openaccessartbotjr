@@ -91,7 +91,12 @@ async function getObjectForSearchTerm(searchTerm) {
 
     const db = client.db("heroku_sq60p3vj");
     let query = { SearchTerm: searchTerm };
-    let temp = await db.collection("SearchTerms").findOne(query);
+    let collection = db.collection("SearchTerms");
+    let collectionCount = await collection.count(query);
+    let skipCount = Math.floor(Math.random() * collectionCount);
+    
+    //let temp = collection.findOne(query);
+    let temp = await db.collection.find(query).limit(1).skip(skipCount);
 
     //console.log(temp);
 
