@@ -97,7 +97,7 @@ module.exports = function(controller) {
 
                 let objectData = await CollectionApiService.getObjectById(searchResult.SelectedObjectId);
                 
-                await sendInteractiveDialog(bot, message, selectData.searchTerm, objectData, selectData.userName, selectData.attempt, true);
+                await sendInteractiveDialog(bot, message, selectData.searchTerm, objectData, selectData.userName, selectData.attempt + 1, true);
                 
             } else {
                 // TODO error!
