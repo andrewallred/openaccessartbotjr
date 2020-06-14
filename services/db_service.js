@@ -99,6 +99,7 @@ async function getObjectForSearchTerm(searchTerm) {
     
     //let temp = await collection.findOne(query); //.limit(1).skip(skipCount);
     let temp = await collection.find(query);
+    console.log(temp);
     temp = temp[skipCount];
 
     //console.log(temp);
