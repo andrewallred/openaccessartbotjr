@@ -99,7 +99,7 @@ async function getObjectForSearchTerm(searchTerm) {
         if (temp.ObjectId != null) {
             selectedResult.SelectedObjectId = temp.ObjectId;
         } else if (temp.ObjectUrl != null) {
-            selectedResult.SelectedObjectId = temp.ObjectUrl.replace('https://www.metmuseum.org/art/collection/search/');
+            selectedResult.SelectedObjectId = temp.ObjectUrl.replace('https://www.metmuseum.org/art/collection/search/', '');
         }
     }
 
