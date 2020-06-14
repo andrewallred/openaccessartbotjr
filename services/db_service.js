@@ -96,10 +96,10 @@ async function getObjectForSearchTerm(searchTerm) {
     console.log(temp);
 
     if (temp) {
-        if (temp.objectId != null) {
+        if (temp.ObjectId != null) {
             selectedResult.SelectedObjectId = temp.ObjectId;
-        } else if (temp.objectUrl != null) {
-            selectedResult.SelectedObjectId = temp.objectUrl.replace('https://www.metmuseum.org/art/collection/search/');
+        } else if (temp.ObjectUrl != null) {
+            selectedResult.SelectedObjectId = temp.ObjectUrl.replace('https://www.metmuseum.org/art/collection/search/');
         }
     }
 
