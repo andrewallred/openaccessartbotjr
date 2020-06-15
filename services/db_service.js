@@ -92,7 +92,6 @@ async function getObjectForSearchTerm(searchTerm) {
     const db = client.db("heroku_sq60p3vj");
     let collection = db.collection("SearchTerms");
     
-    //let temp = await collection.findOne(query); //.limit(1).skip(skipCount);
     let temp = {};
 
     await collection.aggregate([
@@ -100,12 +99,8 @@ async function getObjectForSearchTerm(searchTerm) {
         { $sample: { size: 1 } }
     ]).forEach( function(result) { temp = result; } );
 
-    //let temp = await collection.find(query);
     console.log(temp);
-    //temp = temp[skipCount];
-
-    //console.log(temp);
-
+    
     if (temp) {
         if (temp.ObjectId != null) {
             selectedResult.SelectedObjectId = temp.ObjectId;
