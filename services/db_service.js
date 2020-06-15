@@ -93,11 +93,12 @@ async function getObjectForSearchTerm(searchTerm) {
     let collection = db.collection("SearchTerms");
     
     //let temp = await collection.findOne(query); //.limit(1).skip(skipCount);
+    let temp = {};
 
     let temp = await collection.aggregate([
         { $match: { SearchTerm: searchTerm } },
         { $sample: { size: 1 } }
-    ]);
+    ]).forEach( function(result) { temp = result; } );
 
     //let temp = await collection.find(query);
     console.log(temp);
