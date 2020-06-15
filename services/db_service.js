@@ -99,6 +99,7 @@ async function getObjectForSearchTerm(searchTerm) {
         { $sample: { size: 1 } }
     ]).forEach( function(result) { temp = result; } );
 
+    console.log('logging random prior result ');
     console.log(temp);
     
     if (temp) {
