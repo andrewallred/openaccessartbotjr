@@ -95,7 +95,7 @@ async function getObjectForSearchTerm(searchTerm) {
     //let temp = await collection.findOne(query); //.limit(1).skip(skipCount);
     let temp = {};
 
-    let temp = await collection.aggregate([
+    await collection.aggregate([
         { $match: { SearchTerm: searchTerm } },
         { $sample: { size: 1 } }
     ]).forEach( function(result) { temp = result; } );
