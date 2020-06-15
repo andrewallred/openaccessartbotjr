@@ -82,7 +82,7 @@ module.exports = function(controller) {
             //console.log(selectData);
 
             let searchResult;
-            if (selectData.attempt % 3 == 0) {
+            if ((selectData.attempt + 1) % 3 == 0) {
                 searchResult = await DbService.getObjectForSearchTerm(selectData.searchTerm);
 
                 console.log('looked up prior search result');
