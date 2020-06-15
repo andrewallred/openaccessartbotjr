@@ -90,14 +90,15 @@ async function getObjectForSearchTerm(searchTerm) {
     const client = await MongoClient.connect(process.env.MONGO_URI);
 
     const db = client.db("heroku_sq60p3vj");
-    let query = { SearchTerm: searchTerm };
     let collection = db.collection("SearchTerms");
-    let collectionCount = await collection.count(query);
-    console.log('prior search results ' + collectionCount);
-    let skipCount = Math.floor(Math.random() * collectionCount);
-    console.log('skip count ' + skipCount);
     
-    let temp = await collection.findOne(query); //.limit(1).skip(skipCount);
+    //let temp = await collection.findOne(query); //.limit(1).skip(skipCount);
+
+    let temp = await collection.aggregate([
+        { $match: { SearchTerm: searchTerm } },
+        { $sample: { size: 1 } }
+    ])
+
     //let temp = await collection.find(query);
     //console.log(temp);
     //temp = temp[skipCount];
