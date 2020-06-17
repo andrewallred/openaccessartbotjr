@@ -16,6 +16,8 @@ module.exports = function(controller) {
 
     controller.on('slash_command', async(bot, message) => {
 
+        let startTime = new Date();
+
         if (message.command === "/oa") {
 
             try {
@@ -57,10 +59,18 @@ module.exports = function(controller) {
 
         }
 
+        let endTime = new Date();
+
+        let timeElapsed = endTime - startTime;
+
+        console.log('slash command timeElapsed ' + timeElapsed);
+
     });
 
     // receive an interactive message, and reply with a message that will replace the original
     controller.on('block_actions', async(bot, message) => {
+
+        let startTime = new Date();
 
         if (message.text.includes('select ')) {
 
@@ -110,6 +120,12 @@ module.exports = function(controller) {
             SlackApiService.deleteEphemeralMessage(deleteUrl);
 
         }
+
+        let endTime = new Date();
+
+        let timeElapsed = endTime - startTime;
+
+        console.log('block action timeElapsed ' + timeElapsed);
         
     });
 
