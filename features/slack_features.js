@@ -151,6 +151,8 @@ function buildSomethingWentWrongResponse(imageUrl, searchTerm, userName) {
 
 async function sendInteractiveDialog(bot, message, searchTerm, objectData, userName, attempt, allowShuffle) {
 
+    let startTime = new Date();
+
     let sendData = {
         imageUrl: objectData.primaryImageSmall,
         objectUrl: objectData.objectURL,
@@ -212,6 +214,12 @@ async function sendInteractiveDialog(bot, message, searchTerm, objectData, userN
         // lazy
         blocks.blocks[1].elements.splice(1, 1);
     }
+
+    let endTime = new Date();
+
+    let timeElapsed = endTime - startTime;
+
+    console.log('block action timeElapsed ' + timeElapsed);
 
     await bot.replyInteractive(message, blocks);      
 
