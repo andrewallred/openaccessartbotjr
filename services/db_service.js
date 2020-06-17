@@ -41,6 +41,8 @@ async function getTeamById(teamId) {
 
 async function getTermsForSlang(slang) {
 
+    let startTime = new Date();
+
     slang = encodeURIComponent(slang);
 
     //console.log("getting slang " + slang);
@@ -56,6 +58,12 @@ async function getTermsForSlang(slang) {
     if (temp) {
         slangTerms = temp.Terms;
     }
+
+    let endTime = new Date();
+
+    let timeElapsed = endTime - startTime;
+
+    console.log('getObjectById timeElapsed ' + timeElapsed);
 
     return slangTerms;
 
