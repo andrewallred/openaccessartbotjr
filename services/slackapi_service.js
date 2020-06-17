@@ -7,7 +7,7 @@ const axios = require('axios').default;
 
 async function deleteEphemeralMessage(response_url) {
 
-    const results = await axios.post(response_url, {
+    const results = axios.post(response_url, {
         "delete_original": "true"
     });
 
@@ -15,7 +15,7 @@ async function deleteEphemeralMessage(response_url) {
 
 async function respondPubliclyToEphemeralMessage(response_url, text) {
 
-    const results = await axios.post(response_url, {
+    const results = axios.post(response_url, {
         "delete_original": "true",
         "text": text,
         "replace_original": false,
