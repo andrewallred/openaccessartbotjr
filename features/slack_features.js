@@ -39,7 +39,7 @@ module.exports = function(controller) {
 
                     let objectData = await CollectionApiService.getObjectById(searchResult.SelectedObjectId);
 
-                    await sendInteractiveDialog(bot, message, searchTerm, objectData, message.user_name, 1, searchResult.ResultsCount > 1);
+                    sendInteractiveDialog(bot, message, searchTerm, objectData, message.user_name, 1, searchResult.ResultsCount > 1);
 
                 }
 
@@ -107,7 +107,7 @@ module.exports = function(controller) {
 
                 let objectData = await CollectionApiService.getObjectById(searchResult.SelectedObjectId);
                 
-                await sendInteractiveDialog(bot, message, selectData.searchTerm, objectData, selectData.userName, selectData.attempt + 1, true);
+                sendInteractiveDialog(bot, message, selectData.searchTerm, objectData, selectData.userName, selectData.attempt + 1, true);
                 
             } else {
                 // TODO error!
@@ -221,6 +221,6 @@ async function sendInteractiveDialog(bot, message, searchTerm, objectData, userN
 
     console.log('send interactive dialog timeElapsed ' + timeElapsed);
 
-    await bot.replyInteractive(message, blocks);      
+    bot.replyInteractive(message, blocks);      
 
 }
