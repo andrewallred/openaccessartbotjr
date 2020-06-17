@@ -75,7 +75,7 @@ async function getObjectForSearchTerm(searchTerm) {
 
     let timeElapsed = endTime - startTime;
 
-    console.log('timeElapsed ' + timeElapsed);
+    console.log('getObjectForSearchTerm timeElapsed ' + timeElapsed);
 
     return Promise.resolve(searchResults);
 
@@ -83,10 +83,20 @@ async function getObjectForSearchTerm(searchTerm) {
 
 async function getObjectById(objectId) {
 
+    let startTime = new Date();
+
     const objectUrl = baseObjectUrl + objectId;
 
     //console.log('getting object by id: ' + objectId);
 
-    return axios.get(objectUrl).then(results => Promise.resolve(results.data));
+    let result = axios.get(objectUrl).then(results => Promise.resolve(results.data));
+
+    let endTime = new Date();
+
+    let timeElapsed = endTime - startTime;
+
+    console.log('getObjectById timeElapsed ' + timeElapsed);
+
+    return result;
 
 }
