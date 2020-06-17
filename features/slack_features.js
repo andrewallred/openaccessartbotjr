@@ -219,7 +219,7 @@ async function sendInteractiveDialog(bot, message, searchTerm, objectData, userN
 
     let timeElapsed = endTime - startTime;
 
-    console.log('block action timeElapsed ' + timeElapsed);
+    console.log('send interactive dialog timeElapsed ' + timeElapsed);
 
     await bot.replyInteractive(message, blocks);      
 
