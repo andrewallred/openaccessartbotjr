@@ -58,6 +58,9 @@ async function getObjectForSearchTerm(searchTerm) {
         if (Math.random() * 10 < 3) {
             objectIndex = Math.floor(Math.random() * data.total);
         }
+        else if (Math.random() * 100 < 3) {
+            objectIndex = 0;
+        }
         else {
             objectIndex = Math.floor(Math.random() * data.total / 8);
         }
