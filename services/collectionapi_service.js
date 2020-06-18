@@ -59,7 +59,7 @@ async function getObjectForSearchTerm(searchTerm) {
             objectIndex = Math.floor(Math.random() * data.total);
         }
         else {
-            objectIndex = Math.floor(Math.random() * data.total / 4);
+            objectIndex = Math.floor(Math.random() * data.total / 8);
         }
     }
     
