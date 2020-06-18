@@ -55,7 +55,7 @@ async function getObjectForSearchTerm(searchTerm) {
     let objectIndex = 0;
     if (!getTopResult) {
         // randomly get closer to the top of the results
-        if (Math.random() * 10 < 3) {
+        if (Math.random() * 100 < 20) {
             objectIndex = Math.floor(Math.random() * data.total);
         }
         else if (Math.random() * 100 < 3) {
