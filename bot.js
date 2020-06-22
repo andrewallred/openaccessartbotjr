@@ -4,6 +4,8 @@
 
 // This is the main file for the openaccessartbotjr bot.
 
+require ('newrelic');
+
 // Import Botkit's core features
 const { Botkit } = require('botkit');
 const { BotkitCMSHelper } = require('botkit-plugin-cms');

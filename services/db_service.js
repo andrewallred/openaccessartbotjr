@@ -63,7 +63,7 @@ async function getTermsForSlang(slang) {
 
     let timeElapsed = endTime - startTime;
 
-    console.log('getObjectById timeElapsed ' + timeElapsed);
+    console.log('getTermsForSlang timeElapsed ' + timeElapsed);
 
     return slangTerms;
 
