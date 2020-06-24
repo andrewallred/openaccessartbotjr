@@ -24,22 +24,66 @@ module.exports = function(controller) {
 
                 let searchTerm = message.text;
 
-                let searchResult = await CollectionApiService.getObjectForSearchTerm(searchTerm);
+                if (searchTerm == "help") {
 
-                if (searchResult == null || searchResult.SelectedObjectId == null) {
+                    let helpBlocks = {
+                        "blocks": [
+                            {
+                                "type": "section",
+                                "text": {
+                                    "type": "mrkdwn",
+                                    "text": ":wave: Need some help with Open Access Art Bot? By typing the /oa command and a search term you can search for and select artworks to share with your slack workspace! "
+                                }
+                            },
+                            {
+                                "type": "divider"
+                            },
+                            {
+                                "type": "section",
+                                "text": {
+                                    "type": "mrkdwn",
+                                    "text": "`/oa van gogh` Simple searches will search for the given term, in this case returning works by Van Gogh or similar artists."
+                                }
+                            },
+                            {
+                                "type": "section",
+                                "text": {
+                                    "type": "mrkdwn",
+                                    "text": "`/oa manet \"top\"` Searches using \"top\" will select the top artwork for the given search term."
+                                }
+                            },
+                            {
+                                "type": "section",
+                                "text": {
+                                    "type": "mrkdwn",
+                                    "text": "`/oa \"One Hundred Famous Views of Edo\"` Quoted searches will select artworks for the exact term (and this is a great one to test out)."
+                                }
+                            }
+                        ]
+                    };
 
-                    let response = buildNotFoundResponse("https://images.metmuseum.org/CRDImages/dp/web-large/DP815335.jpg", searchTerm, message.user_name);
-                    
-                    let responseUrl = message.incoming_message.channelData.response_url;
-                    SlackApiService.respondPubliclyToEphemeralMessage(responseUrl, response);
-
-                    DbService.saveSearchTerm(searchTerm, null, null);
+                    bot.replyInteractive(message, helpBlocks);
 
                 } else {
 
-                    let objectData = await CollectionApiService.getObjectById(searchResult.SelectedObjectId);
+                    let searchResult = await CollectionApiService.getObjectForSearchTerm(searchTerm);
 
-                    sendInteractiveDialog(bot, message, searchTerm, objectData, message.user_name, 1, searchResult.ResultsCount > 1);
+                    if (searchResult == null || searchResult.SelectedObjectId == null) {
+
+                        let response = buildNotFoundResponse("https://images.metmuseum.org/CRDImages/dp/web-large/DP815335.jpg", searchTerm, message.user_name);
+                        
+                        let responseUrl = message.incoming_message.channelData.response_url;
+                        SlackApiService.respondPubliclyToEphemeralMessage(responseUrl, response);
+
+                        DbService.saveSearchTerm(searchTerm, null, null);
+
+                    } else {
+
+                        let objectData = await CollectionApiService.getObjectById(searchResult.SelectedObjectId);
+
+                        sendInteractiveDialog(bot, message, searchTerm, objectData, message.user_name, 1, searchResult.ResultsCount > 1);
+
+                    }
 
                 }
 
