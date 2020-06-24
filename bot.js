@@ -130,7 +130,8 @@ controller.webserver.get('/install/auth', async (req, res) => {
 
         team = await DbService.getTeamById(results.team.id);
 
-        res.json('Success! Bot installed.');
+        //res.json('Success! Bot installed.');
+        res.redirect('https://www.openaccessartbot.com/success.html');
 
     } catch (err) {
         console.error('OAUTH ERROR:', err);
