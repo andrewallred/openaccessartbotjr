@@ -25,7 +25,7 @@ let storage = null;
 if (process.env.MONGO_URI) {
     storage = mongoStorage = new MongoDbStorage({
         url : process.env.MONGO_URI,
-        database: "heroku_sq60p3vj"
+        database: process.env.MONGO_DB
     });
 }
 
@@ -120,8 +120,6 @@ controller.webserver.get('/install/auth', async (req, res) => {
     try {
         const results = await controller.adapter.validateOauthCode(req.query.code);
 
-        //console.log('FULL OAUTH DETAILS', results);
-
         let team = await DbService.getTeamById(results.team.id);
 
         if (team == null) {
@@ -130,7 +128,6 @@ controller.webserver.get('/install/auth', async (req, res) => {
 
         team = await DbService.getTeamById(results.team.id);
 
-        //res.json('Success! Bot installed.');
         res.redirect('https://www.openaccessartbot.com/success.html');
 
     } catch (err) {

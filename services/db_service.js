@@ -9,11 +9,10 @@ async function saveTeam(teamId, botAccessToken, botUserId) {
     await MongoClient.connect(process.env.MONGO_URI, async (err, db) => {
 
         if (err) throw err;
-        let dbo = db.db("heroku_sq60p3vj");
+        let dbo = db.db(process.env.MONGO_DB);
         let team = { TeamId: teamId, BotAccessToken: botAccessToken, BotUserId: botUserId };
         dbo.collection("Teams").insertOne(team, function(err, res) {
             if (err) throw err;
-            //console.log("1 document inserted");
             db.close();
         });
 
@@ -23,13 +22,11 @@ async function saveTeam(teamId, botAccessToken, botUserId) {
 
 async function getTeamById(teamId) {
 
-    //console.log("getting team " + teamId);
-
     let team;
 
     const client = await MongoClient.connect(process.env.MONGO_URI);
 
-    const db = client.db("heroku_sq60p3vj");
+    const db = client.db(process.env.MONGO_DB);
     let query = { TeamId: teamId };
     let temp = await db.collection("Teams").findOne(query);
 
@@ -45,13 +42,11 @@ async function getTermsForSlang(slang) {
 
     slang = encodeURIComponent(slang);
 
-    //console.log("getting slang " + slang);
-
     let slangTerms;
 
     const client = await MongoClient.connect(process.env.MONGO_URI);
 
-    const db = client.db("heroku_sq60p3vj");
+    const db = client.db(process.env.MONGO_DB);
     let query = { Slang: slang };
     let temp = await db.collection("Slang").findOne(query);
 
@@ -76,12 +71,10 @@ async function saveSearchTerm(searchTerm, objectUrl, objectId) {
     await MongoClient.connect(process.env.MONGO_URI, async (err, db) => {
 
         if (err) throw err;
-        let dbo = db.db("heroku_sq60p3vj");
+        let dbo = db.db(process.env.MONGO_DB);
         let term = { SearchTerm: encodeURIComponent(searchTerm), ObjectUrl: objectUrl, ObjectId: objectId };
-        //console.log(term);
         dbo.collection("SearchTerms").insertOne(term, function(err, res) {
             if (err) throw err;
-            //console.log("1 document inserted");
             db.close();
         });
 
@@ -97,7 +90,7 @@ async function getObjectForSearchTerm(searchTerm) {
 
     const client = await MongoClient.connect(process.env.MONGO_URI);
 
-    const db = client.db("heroku_sq60p3vj");
+    const db = client.db(process.env.MONGO_DB);
     let collection = db.collection("SearchTerms");
     
     let temp = {};

@@ -22,7 +22,6 @@ async function getObjectForSearchTerm(searchTerm) {
     }
 
     let slangTerms = await DbService.getTermsForSlang(searchTerm);
-    //console.log(slangTerms);
     if (slangTerms && slangTerms.length > 0) {
         searchTerm = slangTerms[Math.floor(Math.random() * slangTerms.length)];
         searchTerm = "\"" + searchTerm + "\"";
@@ -30,9 +29,6 @@ async function getObjectForSearchTerm(searchTerm) {
     else {
         searchTerm = encodeURIComponent(searchTerm);
     }
-
-    //console.log("encoded searchTerm is ");
-    //console.log(searchTerm);
 
     // need to replace the annoying curly quotes post-encoding
     // if someone else wants to do this in a non-terrible way please do
@@ -47,9 +43,6 @@ async function getObjectForSearchTerm(searchTerm) {
     if (data == null || data.total == 0) {            
         return null;
     }
-
-    //console.log('selecting an object for searchTerm: ' + searchTerm);
-    //console.log('number of results ' + data.total);
 
     // select an object
     let objectIndex = 0;
@@ -71,9 +64,6 @@ async function getObjectForSearchTerm(searchTerm) {
         ResultsCount: data.total
     };
 
-    //console.log('selected an object: ');
-    //console.log(searchResults);
-
     let endTime = new Date();
 
     let timeElapsed = endTime - startTime;
@@ -89,8 +79,6 @@ async function getObjectById(objectId) {
     let startTime = new Date();
 
     const objectUrl = baseObjectUrl + objectId;
-
-    //console.log('getting object by id: ' + objectId);
 
     let result = axios.get(objectUrl).then(results => Promise.resolve(results.data));
 
