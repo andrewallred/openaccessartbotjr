@@ -209,7 +209,7 @@ async function sendInteractiveDialog(bot, message, searchTerm, objectData, userN
                 "type": "image",
                 "title": {
                     "type": "plain_text",
-                    "text": "Example Image",
+                    "text": objectData.title,
                     "emoji": true
                 },
                 "image_url": objectData.primaryImageSmall,
