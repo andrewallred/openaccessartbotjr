@@ -213,7 +213,7 @@ async function sendInteractiveDialog(bot, message, searchTerm, objectData, userN
                     "emoji": true
                 },
                 "image_url": objectData.primaryImageSmall,
-                "alt_text": "monet"
+                "alt_text": searchTerm
             },
             {
                 "type": "actions",
