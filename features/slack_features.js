@@ -56,7 +56,7 @@ module.exports = function(controller) {
                                 "type": "section",
                                 "text": {
                                     "type": "mrkdwn",
-                                    "text": "`/oa \"One Hundred Famous Views of Edo\"` Quoted searches will select artworks for the exact term (and this is a great one to test out)."
+                                    "text": "`/oa \"One Hundred Famous Views of Edo\"` Quoted searches will select artworks for the exact term (and this is a great one to test out!)."
                                 }
                             }
                         ]
