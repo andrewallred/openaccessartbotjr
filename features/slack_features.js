@@ -198,7 +198,7 @@ function buildFoundResponse(imageUrl, objectUrl, objectTitle, searchTerm, userNa
         ]
     };
 
-    return blocks;
+    return JSON.stringify(blocks);
 
 }
 
