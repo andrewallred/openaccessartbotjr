@@ -122,7 +122,7 @@ module.exports = function(controller) {
 
             let responseUrl = message.incoming_message.channelData.response_url;
 
-            let response = buildFoundResponse(selectData.imageUrl, selectData.objectUrl, selectData.title, selectData.searchTerm, selectData.userName);
+            let response = buildFoundResponse(selectData.imageUrl, selectData.objectUrl, selectData.objectTitle, selectData.searchTerm, selectData.userName);
         
             SlackApiService.respondWithBlocksPubliclyToEphemeralMessage(responseUrl, response);
 
@@ -193,7 +193,7 @@ function buildFoundResponse(imageUrl, objectUrl, objectTitle, searchTerm, userNa
                     "emoji": true
                 },
                 "image_url": imageUrl,
-                "alt_text": "search"
+                "alt_text": objectTitle
             }
         ]
     };
@@ -221,6 +221,7 @@ async function sendInteractiveDialog(bot, message, searchTerm, objectData, userN
     let sendData = {
         imageUrl: objectData.primaryImageSmall,
         objectUrl: objectData.objectURL,
+        objectTitle: objectData.title,
         objectId: objectData.objectID,
         searchTerm: searchTerm,
         userName: userName,
