@@ -73,7 +73,7 @@ module.exports = function(controller) {
                         let response = buildNotFoundResponse("https://images.metmuseum.org/CRDImages/dp/web-large/DP815335.jpg", searchTerm, message.user_name);
                         
                         let responseUrl = message.incoming_message.channelData.response_url;
-                        SlackApiService.respondPubliclyToEphemeralMessage(responseUrl, response);
+                        SlackApiService.respondWithTextPubliclyToEphemeralMessage(responseUrl, response);
 
                         DbService.saveSearchTerm(searchTerm, null, null);
 
@@ -95,7 +95,7 @@ module.exports = function(controller) {
                 let response = buildSomethingWentWrongResponse("https://images.metmuseum.org/CRDImages/dp/web-large/DP835005.jpg", searchTerm, message.user_name);
                     
                 let responseUrl = message.incoming_message.channelData.response_url;
-                SlackApiService.respondPubliclyToEphemeralMessage(responseUrl, response);
+                SlackApiService.respondWithTextPubliclyToEphemeralMessage(responseUrl, response);
 
                 DbService.saveSearchTerm(searchTerm, null, null);
 
@@ -124,7 +124,7 @@ module.exports = function(controller) {
 
             let response = buildFoundResponse(selectData.imageUrl, selectData.objectUrl, selectData.title, selectData.searchTerm, selectData.userName);
         
-            SlackApiService.respondPubliclyToEphemeralMessage(responseUrl, response);
+            SlackApiService.respondWithBlocksPubliclyToEphemeralMessage(responseUrl, response);
 
             DbService.saveSearchTerm(selectData.searchTerm, selectData.objectUrl, selectData.objectId);
 
@@ -198,7 +198,7 @@ function buildFoundResponse(imageUrl, objectUrl, objectTitle, searchTerm, userNa
         ]
     };
 
-    return JSON.stringify(blocks);
+    return blocks;
 
 }
 
