@@ -32,3 +32,4 @@ async function respondWithBlocksPubliclyToEphemeralMessage(response_url, blocks)
         "replace_original": false,
         "response_type": "in_channel"
     });
+}
