@@ -174,8 +174,9 @@ module.exports = function(controller) {
 
 function buildFoundResponse(imageUrl, objectUrl, objectTitle, searchTerm, userName) {
 
-    //return '<' + imageUrl + '|' + decodeURI(searchTerm) + '> requested by ' + userName + ' (' + '<' + objectUrl + '|learn more>)';
+    return '<' + imageUrl + '|' + decodeURI(searchTerm) + '> requested by ' + userName + ' (' + '<' + objectUrl + '|learn more>)';
 
+    // not used for now
     let blocks = {
         "blocks": [
             {
