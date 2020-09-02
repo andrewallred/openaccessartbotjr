@@ -124,7 +124,7 @@ module.exports = function(controller) {
 
             let response = buildFoundResponse(selectData.imageUrl, selectData.objectUrl, selectData.objectTitle, selectData.searchTerm, selectData.userName);
         
-            SlackApiService.respondWithBlocksPubliclyToEphemeralMessage(responseUrl, response);
+            SlackApiService.respondWithTextPubliclyToEphemeralMessage(responseUrl, response);
 
             DbService.saveSearchTerm(selectData.searchTerm, selectData.objectUrl, selectData.objectId);
 

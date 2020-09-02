@@ -29,7 +29,7 @@ async function respondWithBlocksPubliclyToEphemeralMessage(response_url, blocks)
     console.log(JSON.stringify(blocks));
     const results = axios.post(response_url, {
         "delete_original": "true",
-        "blocks": JSON.stringify(blocks),
+        "blocks": blocks,
         "replace_original": false,
         "response_type": "in_channel"
     });
