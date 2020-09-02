@@ -122,7 +122,7 @@ module.exports = function(controller) {
 
             let responseUrl = message.incoming_message.channelData.response_url;
 
-            let response = buildFoundResponse(selectData.imageUrl, selectData.objectUrl, selectData.searchTerm, selectData.userName);
+            let response = buildFoundResponse(selectData.imageUrl, selectData.objectUrl, selectData.title, selectData.searchTerm, selectData.userName);
         
             SlackApiService.respondPubliclyToEphemeralMessage(responseUrl, response);
 
@@ -172,9 +172,33 @@ module.exports = function(controller) {
 
 }
 
-function buildFoundResponse(imageUrl, objectUrl, searchTerm, userName) {
+function buildFoundResponse(imageUrl, objectUrl, objectTitle, searchTerm, userName) {
 
-    return '<' + imageUrl + '|' + decodeURI(searchTerm) + '> requested by ' + userName + ' (' + '<' + objectUrl + '|learn more>)';
+    //return '<' + imageUrl + '|' + decodeURI(searchTerm) + '> requested by ' + userName + ' (' + '<' + objectUrl + '|learn more>)';
+
+    let blocks = {
+        "blocks": [
+            {
+                "type": "section",
+                "text": {
+                    "type": "mrkdwn",
+                    "text": decodeURI(searchTerm) + " requested by " + userName + " " + "<" + objectUrl + "|learn more>)"
+                }
+            },
+            {
+                "type": "image",
+                "title": {
+                    "type": "plain_text",
+                    "text": objectTitle,
+                    "emoji": true
+                },
+                "image_url": imageUrl,
+                "alt_text": "search"
+            }
+        ]
+    };
+
+    return blocks;
 
 }
 
