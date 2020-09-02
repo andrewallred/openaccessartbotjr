@@ -182,7 +182,7 @@ function buildFoundResponse(imageUrl, objectUrl, objectTitle, searchTerm, userNa
                 "type": "section",
                 "text": {
                     "type": "mrkdwn",
-                    "text": decodeURI(searchTerm) + " requested by " + userName + " " + "<" + objectUrl + "|learn more>)"
+                    "text": decodeURI(searchTerm) + " requested by " + userName + " " + "(<" + objectUrl + "|learn more>)"
                 }
             },
             {
