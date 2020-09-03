@@ -122,9 +122,10 @@ module.exports = function(controller) {
 
             let responseUrl = message.incoming_message.channelData.response_url;
 
-            let response = buildFoundResponse(selectData.imageUrl, selectData.objectUrl, selectData.objectTitle, selectData.searchTerm, selectData.userName);
+            let responseText = buildFoundResponseText(selectData.imageUrl, selectData.objectUrl, selectData.objectTitle, selectData.searchTerm, selectData.userName);
+            let responseBlocks = buildFoundResponseBlocks(selectData.imageUrl, selectData.objectUrl, selectData.objectTitle, selectData.searchTerm, selectData.userName);
         
-            SlackApiService.respondWithTextPubliclyToEphemeralMessage(responseUrl, response);
+            SlackApiService.respondPubliclyToEphemeralMessage(responseUrl, responseText, responseBlocks);
 
             DbService.saveSearchTerm(selectData.searchTerm, selectData.objectUrl, selectData.objectId);
 
@@ -172,9 +173,13 @@ module.exports = function(controller) {
 
 }
 
-function buildFoundResponse(imageUrl, objectUrl, objectTitle, searchTerm, userName) {
+function buildFoundResponseText(imageUrl, objectUrl, objectTitle, searchTerm, userName) {
 
     return '<' + imageUrl + '|' + decodeURI(searchTerm) + '> requested by ' + userName + ' (' + '<' + objectUrl + '|learn more>)';
+
+}
+
+function buildFoundResponseBlocks(imageUrl, objectUrl, objectTitle, searchTerm, userName) {
 
     // not used for now
     let blocks = {
