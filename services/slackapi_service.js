@@ -20,7 +20,6 @@ async function respondPubliclyToEphemeralMessage(response_url, text, blocks) {
     const results = axios.post(response_url, {
         "delete_original": "true",
         "text": text,
-        "blocks": blocks,
         "replace_original": false,
         "response_type": "in_channel"
     }).catch(function (error) {
