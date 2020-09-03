@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "axios": "^0.19.2",
+    "bl": "^1.2.3",
     "botbuilder-adapter-slack": "^1.0.10",
     "botbuilder-storage-mongodb": "^0.9.5",
     "botkit": "^4.6.2",
