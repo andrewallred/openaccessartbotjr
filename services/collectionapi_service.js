@@ -36,9 +36,17 @@ async function getObjectForSearchTerm(searchTerm) {
     searchTerm = searchTerm.replace("%E2%80%9D", "\"");
 
     const searchUrl = baseSearchUrl + searchTerm + filter;
+
+    let axiosStartTime = new Date();
     
     const results = await axios.get(searchUrl);
     const data = results.data;
+
+    let axiosEndTime = new Date();
+
+    let axiosTimeElapsed = axiosEndTime - startTime;
+
+    console.log('axios search timeElapsed ' + axiosTimeElapsed);
     
     if (data == null || data.total == 0) {            
         return null;
