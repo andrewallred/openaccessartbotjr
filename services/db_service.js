@@ -32,6 +32,8 @@ async function getTeamById(teamId) {
 
     team = temp;
 
+    client.close();
+
     return team;
 
 }
@@ -59,6 +61,8 @@ async function getTermsForSlang(slang) {
     let timeElapsed = endTime - startTime;
 
     console.log('getTermsForSlang timeElapsed ' + timeElapsed);
+
+    client.close();
 
     return slangTerms;
 
@@ -110,6 +114,8 @@ async function getObjectForSearchTerm(searchTerm) {
             selectedResult.SelectedObjectId = temp.ObjectUrl.replace('https://www.metmuseum.org/art/collection/search/', '');
         }
     }
+
+    client.close();
 
     return selectedResult;
 
