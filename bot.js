@@ -4,7 +4,8 @@
 
 // This is the main file for the openaccessartbotjr bot.
 
-require ('newrelic');
+// TODO reenable after fixing breaking changes
+// require ('newrelic');
 
 // Import Botkit's core features
 const { Botkit } = require('botkit');
