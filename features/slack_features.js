@@ -175,6 +175,14 @@ module.exports = function(controller) {
 
 function buildFoundResponseText(imageUrl, objectUrl, objectTitle, searchTerm, userName) {
 
+    searchTerm = searchTerm.replace("#top ", "");    
+
+    let hasMedium = searchTerm.includes("#medium ");
+    if (hasMedium) {
+        let medium = searchTerm.match(new RegExp('\#medium\\s(\\w+)'))[1];
+        searchTerm = searchTerm.replace(" #medium " + medium, "");
+    }
+
     return '<' + imageUrl + '|' + decodeURI(searchTerm) + '> requested by ' + userName + ' (' + '<' + objectUrl + '|learn more>)';
 
 }
