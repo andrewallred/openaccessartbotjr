@@ -21,6 +21,13 @@ async function getObjectForSearchTerm(searchTerm) {
         searchTerm = searchTerm.replace("#top ", "");
     }
 
+    let medium;
+    let hasMedium = searchTerm.includes("#medium ");
+    if (hasMedium) {
+        medium = searchTerm.match(new RegExp('\#medium\\s(\\w+)'))[1];
+        searchTerm = searchTerm.replace(" #medium " + medium, "");
+    }
+
     let slangTerms = await DbService.getTermsForSlang(searchTerm);
     if (slangTerms && slangTerms.length > 0) {
         searchTerm = slangTerms[Math.floor(Math.random() * slangTerms.length)];
@@ -34,6 +41,10 @@ async function getObjectForSearchTerm(searchTerm) {
     // if someone else wants to do this in a non-terrible way please do
     searchTerm = searchTerm.replace("%E2%80%9C", "\"");
     searchTerm = searchTerm.replace("%E2%80%9D", "\"");
+
+    if (hasMedium && medium) {
+        searchTerm = searchTerm + "&medium=" + encodeURIComponent(medium);
+    }
 
     const searchUrl = baseSearchUrl + searchTerm + filter;
 
