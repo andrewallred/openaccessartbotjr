@@ -183,6 +183,13 @@ function buildFoundResponseText(imageUrl, objectUrl, objectTitle, searchTerm, us
         searchTerm = searchTerm.replace(" #medium " + medium, "");
     }
 
+    let paintingsOnly = searchTerm.includes("#paintings");
+    if (paintingsOnly) {
+        searchTerm = searchTerm.replace(" #paintings ", "");
+        searchTerm = searchTerm.replace("#paintings ", "");
+        searchTerm = searchTerm.replace(" #paintings", "");
+    }
+
     return '<' + imageUrl + '|' + decodeURI(searchTerm) + '> requested by ' + userName + ' (' + '<' + objectUrl + '|learn more>)';
 
 }

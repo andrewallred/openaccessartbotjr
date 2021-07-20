@@ -21,6 +21,13 @@ async function getObjectForSearchTerm(searchTerm) {
         searchTerm = searchTerm.replace("#top ", "");
     }
 
+    let paintingsOnly = searchTerm.includes("#paintings");
+    if (paintingsOnly) {
+        searchTerm = searchTerm.replace(" #paintings ", "");
+        searchTerm = searchTerm.replace("#paintings ", "");
+        searchTerm = searchTerm.replace(" #paintings", "");
+    }
+
     let medium;
     let hasMedium = searchTerm.includes("#medium ");
     if (hasMedium) {
@@ -44,6 +51,10 @@ async function getObjectForSearchTerm(searchTerm) {
 
     if (hasMedium && medium) {
         searchTerm = searchTerm + "&medium=" + encodeURIComponent(medium);
+    }
+
+    if (paintingsOnly) {
+        searchTerm = searchTerm + "&medium=Paintings";
     }
 
     const searchUrl = baseSearchUrl + searchTerm + filter;
