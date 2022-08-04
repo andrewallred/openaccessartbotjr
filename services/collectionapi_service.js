@@ -6,7 +6,7 @@ const DbService = require('../services/db_service.js');
 
 const axios = require('axios').default;
 
-const baseSearchUrl = 'https://collectionapi.metmuseum.org/public/collection/v1/search?q=';
+const baseSearchUrl = 'https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&q=';
 const baseObjectUrl = 'https://collectionapi.metmuseum.org/public/collection/v1/objects/';
 const noResultsUrl = 'https://images.metmuseum.org/CRDImages/dp/web-large/DP815335.jpg';
 const filter = "";
