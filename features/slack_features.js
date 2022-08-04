@@ -249,7 +249,44 @@ async function sendInteractiveDialog(bot, message, searchTerm, objectData, userN
         attempt: attempt
     };
 
-    let blocks = {
+    let notFoundBlocks = {
+        "blocks": [            
+            {
+                "type": "section",
+                "text": {
+                    "type": "plain_text",
+                    "text": "Error! Please try again.",
+                    "emoji": true
+                }
+            },
+            {
+                "type": "actions",
+                "elements": [
+
+                    {
+                        "type": "button",
+                        "text": {
+                            "type": "plain_text",
+                            "emoji": true,
+                            "text": "Shuffle"
+                        },
+                        "value": "shuffle " + JSON.stringify(sendData)
+                    },
+                    {
+                        "type": "button",
+                        "text": {
+                            "type": "plain_text",
+                            "emoji": true,
+                            "text": "Cancel"
+                        },
+                        "value": "cancel " + message.reference.activityId
+                    }
+                ]
+            }		
+        ]
+    };
+
+    let foundBlocks = {
         "blocks": [
             {
                 "type": "image",
@@ -296,6 +333,13 @@ async function sendInteractiveDialog(bot, message, searchTerm, objectData, userN
             }		
         ]
     };
+
+    let blocks;
+    if (objectData.primaryImageSmall) {
+        blocks = foundBlocks;
+    } else {
+        blocks = notFoundBlocks;
+    }
 
     if (!allowShuffle) {
         // lazy
