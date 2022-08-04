@@ -308,7 +308,7 @@ async function sendInteractiveDialog(bot, message, searchTerm, objectData, userN
 
     console.log('send interactive dialog timeElapsed ' + timeElapsed);
 
-    //console.log(JSON.stringify(blocks));
+    console.log(JSON.stringify(blocks));
 
     bot.replyInteractive(message, blocks);      
 
