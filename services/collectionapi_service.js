@@ -1,6 +1,6 @@
 // not totally clean implementation of service calls for the collection api
 
-module.exports = { getObjectForSearchTerm, getObjectById }
+module.exports = { getObjectForSearchTerm }
 
 const DbService = require('../services/db_service.js');
 
@@ -13,13 +13,44 @@ const filter = "";
 
 async function getObjectForSearchTerm(searchTerm) {
 
-    let startTime = new Date();
+    let searchResults = await getObjectsForSearchTerm(searchTerm);
 
     let getTopResult = searchTerm.includes("#top ");
 
     if (getTopResult) {
         searchTerm = searchTerm.replace("#top ", "");
     }
+
+    for (let i = 0; i < 10; i++) {
+
+        // select an object
+        let objectIndex = 0;
+        if (!getTopResult) {
+            // randomly get closer to the top of the results
+            if (Math.random() * 100 < 20) {
+                objectIndex = Math.floor(Math.random() * searchResults.Total);
+            }
+            else if (Math.random() * 100 < 3) {
+                objectIndex = 0;
+            }
+            else {
+                objectIndex = Math.floor(Math.random() * searchResults.Total / 8);
+            }
+        }
+
+        let objectData = await getObjectById(searchResults.ObjectIDs[objectIndex]);
+        objectData.ResultsCount = searchResults.Total;
+        if (objectData.primaryImageSmall) {
+            return objectData;
+        }
+        
+    }
+
+}
+
+async function getObjectsForSearchTerm(searchTerm) {
+
+    let startTime = new Date();
 
     let paintingsOnly = searchTerm.includes("#paintings");
     if (paintingsOnly) {
@@ -74,24 +105,9 @@ async function getObjectForSearchTerm(searchTerm) {
         return null;
     }
 
-    // select an object
-    let objectIndex = 0;
-    if (!getTopResult) {
-        // randomly get closer to the top of the results
-        if (Math.random() * 100 < 20) {
-            objectIndex = Math.floor(Math.random() * data.total);
-        }
-        else if (Math.random() * 100 < 3) {
-            objectIndex = 0;
-        }
-        else {
-            objectIndex = Math.floor(Math.random() * data.total / 8);
-        }
-    }
-    
     let searchResults = {
-        SelectedObjectId: data.objectIDs[objectIndex],
-        ResultsCount: data.total
+        ObjectIDs: data.objectIDs,
+        Total: data.total,
     };
 
     let endTime = new Date();

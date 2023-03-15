@@ -68,7 +68,7 @@ module.exports = function(controller) {
 
                     let searchResult = await CollectionApiService.getObjectForSearchTerm(searchTerm);
 
-                    if (searchResult == null || searchResult.SelectedObjectId == null) {
+                    if (searchResult == null || searchResult.objectID == null) {
 
                         let response = buildNotFoundResponse("https://images.metmuseum.org/CRDImages/dp/web-large/DP815335.jpg", searchTerm, message.user_name);
                         
@@ -79,9 +79,7 @@ module.exports = function(controller) {
 
                     } else {
 
-                        let objectData = await CollectionApiService.getObjectById(searchResult.SelectedObjectId);
-
-                        sendInteractiveDialog(bot, message, searchTerm, objectData, message.user_name, 1, searchResult.ResultsCount > 1);
+                        sendInteractiveDialog(bot, message, searchTerm, searchResult, message.user_name, 1, searchResult.ResultsCount > 1);
 
                     }
 
@@ -145,11 +143,9 @@ module.exports = function(controller) {
                 searchResult = await CollectionApiService.getObjectForSearchTerm(selectData.searchTerm);
             }
 
-            if (searchResult != null && searchResult.SelectedObjectId != null) {
-
-                let objectData = await CollectionApiService.getObjectById(searchResult.SelectedObjectId);
+            if (searchResult != null && searchResult.objectID != null) {
                 
-                sendInteractiveDialog(bot, message, selectData.searchTerm, objectData, selectData.userName, selectData.attempt + 1, true);
+                sendInteractiveDialog(bot, message, selectData.searchTerm, searchResult, selectData.userName, selectData.attempt + 1, true);
                 
             } else {
                 // TODO error!
