@@ -15,6 +15,10 @@ async function getObjectForSearchTerm(searchTerm) {
 
     let searchResults = await getObjectsForSearchTerm(searchTerm);
 
+    if (searchResults == null) {
+        return null;
+    }
+
     let getTopResult = searchTerm.includes("#top ");
 
     if (getTopResult) {
