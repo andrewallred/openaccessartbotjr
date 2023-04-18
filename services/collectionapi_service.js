@@ -1,6 +1,6 @@
 // not totally clean implementation of service calls for the collection api
 
-module.exports = { getObjectForSearchTerm }
+module.exports = { getObjectForSearchTerm, getObjectById }
 
 const DbService = require('../services/db_service.js');
 
