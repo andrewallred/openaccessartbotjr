@@ -24,6 +24,8 @@ module.exports = function(controller) {
 
                 let searchTerm = message.text;
 
+                console.log("searchTerm " + searchTerm)
+
                 if (searchTerm == "help") {
 
                     let helpBlocks = {
