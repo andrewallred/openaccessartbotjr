@@ -144,7 +144,13 @@ module.exports = function(controller) {
             }
 
             if (dbSearchResult == null || dbSearchResult.SelectedObjectId == null) {
-                searchResult = await CollectionApiService.getObjectForSearchTerm(selectData.searchTerm);
+                if (selectData.attempt == 4) {
+                    // get the top result if it is the 4th attempt
+                    searchResult = await CollectionApiService.getObjectForSearchTerm(selectData.searchTerm + " #top ");
+                } else {
+                    // otherwise get a random result
+                    searchResult = await CollectionApiService.getObjectForSearchTerm(selectData.searchTerm);
+                }                
             } else {
                 searchResult = await CollectionApiService.getObjectById(dbSearchResult.SelectedObjectId);
             }
