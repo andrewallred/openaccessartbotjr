@@ -104,6 +104,12 @@ controller.webserver.get('/', (req, res) => {
 
 });
 
+controller.webserver.get('/status', (req, res) => {
+
+    res.send(`open access art bot is up!`);
+
+});
+
 
 
 
