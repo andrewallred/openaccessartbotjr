@@ -4,6 +4,10 @@
  */
 const { SlackDialog } = require('botbuilder-adapter-slack');
 
+const winston = require('winston');
+const consoleTransport = new winston.transports.Console();
+winston.add(consoleTransport);
+
 const CollectionApiService = require('../services/collectionapi_service.js');
 const SlackApiService = require('../services/slackapi_service.js');
 const DbService = require('../services/db_service.js');
@@ -24,7 +28,7 @@ module.exports = function(controller) {
 
                 let searchTerm = message.text;
 
-                console.log("searchTerm " + searchTerm + " | user " + message.user_name);
+                winston.info('searchTerm ' + searchTerm + ' | user ' + message.user_name);
 
                 if (searchTerm == "help") {
 
@@ -89,8 +93,7 @@ module.exports = function(controller) {
 
             } catch (err) {
 
-                console.log("An error occurred ");
-                console.log(err);
+                winston.error('An error occurred ' + err);
 
                 let response = buildSomethingWentWrongResponse("https://images.metmuseum.org/CRDImages/dp/web-large/DP835005.jpg", searchTerm, message.user_name);
                     
@@ -107,7 +110,7 @@ module.exports = function(controller) {
 
         let timeElapsed = endTime - startTime;
 
-        console.log('slash command timeElapsed ' + timeElapsed);
+        winston.debug('slash command timeElapsed ' + timeElapsed);
 
     });
 
@@ -135,19 +138,19 @@ module.exports = function(controller) {
 
             let searchResult;
             let dbSearchResult;
-            console.log("this is attempt #" + selectData.attempt + " for string " + selectData.searchTerm);
+            winston.debug('this is attempt #' + selectData.attempt + ' for string ' + selectData.searchTerm);
             if ((selectData.attempt + 1) % 3 == 0) {
                 dbSearchResult = await DbService.getObjectForSearchTerm(selectData.searchTerm);
 
-                console.log('looked up prior search result');
-                console.log(dbSearchResult);                
+                winston.debug('looked up prior search result');
+                winston.debug(dbSearchResult);                
             }
 
             if (dbSearchResult == null || dbSearchResult.SelectedObjectId == null) {
                 // we're not using a prior search result
                 if (selectData.attempt == 4) {
                     // get the top result if it is the 4th attempt
-                    console.log("getting the top result since it is the 4th attempt");
+                    winston.debug('getting the top result since it is the 4th attempt');
                     searchResult = await CollectionApiService.getObjectForSearchTerm(selectData.searchTerm + " #top");
                 } else {
                     // otherwise get a random result
@@ -163,7 +166,7 @@ module.exports = function(controller) {
                 
             } else {
                 // TODO error!
-                console.log("no object found!")
+                winston.error('no object found!')
             }
 
         } else if (message.text.includes('cancel ')) {
@@ -178,7 +181,7 @@ module.exports = function(controller) {
 
         let timeElapsed = endTime - startTime;
 
-        console.log('block action timeElapsed ' + timeElapsed);
+        winston.debug('block action timeElapsed ' + timeElapsed);
         
     });
 
@@ -361,10 +364,10 @@ async function sendInteractiveDialog(bot, message, searchTerm, objectData, userN
 
     let timeElapsed = endTime - startTime;
 
-    console.log('send interactive dialog timeElapsed ' + timeElapsed);
+    winston.debug('send interactive dialog timeElapsed ' + timeElapsed);
 
     // debug logging statement
-    // console.log(JSON.stringify(blocks));
+    // winston.debug(JSON.stringify(blocks));
 
     bot.replyInteractive(message, blocks);      
 

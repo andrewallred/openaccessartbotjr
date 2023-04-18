@@ -6,6 +6,10 @@ const DbService = require('../services/db_service.js');
 
 const axios = require('axios').default;
 
+const winston = require('winston');
+const consoleTransport = new winston.transports.Console();
+winston.add(consoleTransport);
+
 const baseSearchUrl = 'https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&q=';
 const baseObjectUrl = 'https://collectionapi.metmuseum.org/public/collection/v1/objects/';
 const noResultsUrl = 'https://images.metmuseum.org/CRDImages/dp/web-large/DP815335.jpg';
@@ -103,7 +107,7 @@ async function getObjectsForSearchTerm(searchTerm) {
 
     let axiosTimeElapsed = axiosEndTime - startTime;
 
-    console.log('axios search timeElapsed ' + axiosTimeElapsed);
+    winston.debug('axios search timeElapsed ' + axiosTimeElapsed);
     
     if (data == null || data.total == 0) {            
         return null;
@@ -118,7 +122,7 @@ async function getObjectsForSearchTerm(searchTerm) {
 
     let timeElapsed = endTime - startTime;
 
-    console.log('getObjectForSearchTerm timeElapsed ' + timeElapsed);
+    winston.debug('getObjectForSearchTerm timeElapsed ' + timeElapsed);
 
     return Promise.resolve(searchResults);
 
@@ -136,7 +140,7 @@ async function getObjectById(objectId) {
 
     let timeElapsed = endTime - startTime;
 
-    console.log('getObjectById timeElapsed ' + timeElapsed);
+    winston.debug('getObjectById timeElapsed ' + timeElapsed);
 
     if (result.statusCode == 404) {
         return null;

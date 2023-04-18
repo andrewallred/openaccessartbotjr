@@ -2,6 +2,10 @@ let MongoClient = require('mongodb').MongoClient;
 
 module.exports = { getTeamById, saveTeam, getTermsForSlang, saveSearchTerm, getObjectForSearchTerm }
 
+const winston = require('winston');
+const consoleTransport = new winston.transports.Console();
+winston.add(consoleTransport);
+
 async function saveTeam(teamId, botAccessToken, botUserId) {
 
     let MongoClient = require('mongodb').MongoClient;
@@ -60,7 +64,7 @@ async function getTermsForSlang(slang) {
 
     let timeElapsed = endTime - startTime;
 
-    console.log('getTermsForSlang timeElapsed ' + timeElapsed);
+    winston.debug('getTermsForSlang timeElapsed ' + timeElapsed);
 
     client.close();
 
@@ -104,8 +108,7 @@ async function getObjectForSearchTerm(searchTerm) {
         { $sample: { size: 1 } }
     ]).forEach( function(result) { temp = result; } );
 
-    console.log('found a random prior result');
-    console.log(temp);
+    winston.debug('found a random prior result ' + temp);
     
     if (temp) {
         if (temp.ObjectId != null) {
