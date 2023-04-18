@@ -24,8 +24,7 @@ module.exports = function(controller) {
 
                 let searchTerm = message.text;
 
-                console.log("searchTerm " + searchTerm);
-                console.log("user " + message.user_name);
+                console.log("searchTerm " + searchTerm + " | user " + message.user_name);
 
                 if (searchTerm == "help") {
 
