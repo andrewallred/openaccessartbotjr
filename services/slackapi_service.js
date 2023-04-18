@@ -15,7 +15,8 @@ async function deleteEphemeralMessage(response_url) {
 
 async function respondPubliclyToEphemeralMessage(response_url, text, blocks) {
 
-    console.log(JSON.stringify(blocks));
+    // debug logging statement, commented out in production
+    // console.log(JSON.stringify(blocks));
 
     const results = axios.post(response_url, {
         "delete_original": "true",
