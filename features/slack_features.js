@@ -147,8 +147,8 @@ module.exports = function(controller) {
                 // we're not using a prior search result
                 if (selectData.attempt == 4) {
                     // get the top result if it is the 4th attempt
-                    searchResult = await CollectionApiService.getObjectForSearchTerm(selectData.searchTerm + " #top ");
                     console.log("getting the top result since it is the 4th attempt");
+                    searchResult = await CollectionApiService.getObjectForSearchTerm(selectData.searchTerm + " #top");
                 } else {
                     // otherwise get a random result
                     searchResult = await CollectionApiService.getObjectForSearchTerm(selectData.searchTerm);
