@@ -44,7 +44,7 @@ async function getObjectForSearchTerm(searchTerm) {
 
         let objectData = await getObjectById(searchResults.ObjectIDs[objectIndex]);
         objectData.ResultsCount = searchResults.Total;
-        if (objectData.primaryImageSmall) {
+        if (objectData && objectData.primaryImageSmall) {
             return objectData;
         }
         
@@ -137,6 +137,10 @@ async function getObjectById(objectId) {
     let timeElapsed = endTime - startTime;
 
     console.log('getObjectById timeElapsed ' + timeElapsed);
+
+    if (result.statusCode == 404) {
+        return null;
+    }
 
     return result;
 
