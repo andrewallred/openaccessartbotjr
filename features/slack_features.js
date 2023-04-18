@@ -134,16 +134,19 @@ module.exports = function(controller) {
             const selectData = JSON.parse(message.text.replace('shuffle ', ''));
 
             let searchResult;
-            console.log("this is attempt #" + selectData.attempt + " for string")
+            let dbSearchResult;
+            console.log("this is attempt #" + selectData.attempt + " for string " + selectData.searchTerm);
             if ((selectData.attempt + 1) % 3 == 0) {
-                searchResult = await DbService.getObjectForSearchTerm(selectData.searchTerm);
+                dbSearchResult = await DbService.getObjectForSearchTerm(selectData.searchTerm);
 
                 console.log('looked up prior search result');
-                console.log(searchResult);
+                console.log(dbSearchResult);                
             }
 
-            if (searchResult == null || searchResult.SelectedObjectId == null) {
+            if (dbSearchResult == null || dbSearchResult.SelectedObjectId == null) {
                 searchResult = await CollectionApiService.getObjectForSearchTerm(selectData.searchTerm);
+            } else {
+                searchResult = await CollectionApiService.getObjectById(dbSearchResult.SelectedObjectId);
             }
 
             if (searchResult != null && searchResult.objectID != null) {
