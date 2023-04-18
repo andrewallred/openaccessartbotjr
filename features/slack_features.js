@@ -152,6 +152,7 @@ module.exports = function(controller) {
                 
             } else {
                 // TODO error!
+                console.log("no object found!")
             }
 
         } else if (message.text.includes('cancel ')) {
