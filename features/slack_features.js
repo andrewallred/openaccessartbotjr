@@ -134,6 +134,7 @@ module.exports = function(controller) {
             const selectData = JSON.parse(message.text.replace('shuffle ', ''));
 
             let searchResult;
+            console.log("this is attempt #" + selectData.attempt + " for string")
             if ((selectData.attempt + 1) % 3 == 0) {
                 searchResult = await DbService.getObjectForSearchTerm(selectData.searchTerm);
 
