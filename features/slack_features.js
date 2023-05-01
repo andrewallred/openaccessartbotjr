@@ -76,12 +76,7 @@ module.exports = function(controller) {
 
                     if (searchResult == null || searchResult.objectID == null) {
 
-                        let response = buildNotFoundResponse("https://images.metmuseum.org/CRDImages/dp/web-large/DP815335.jpg", searchTerm, message.user_name);
-                        
-                        let responseUrl = message.incoming_message.channelData.response_url;
-                        SlackApiService.respondPubliclyToEphemeralMessage(responseUrl, response);
-
-                        DbService.saveSearchTerm(searchTerm, null, null);
+                        sendNoResultsResponse(bot, message, searchTerm);                        
 
                     } else {
 
@@ -237,9 +232,24 @@ function buildFoundResponseBlocks(imageUrl, objectUrl, objectTitle, searchTerm, 
 
 }
 
-function buildNotFoundResponse(imageUrl, searchTerm, userName) {
+function sendNoResultsResponse(bot, message, searchTerm) {
 
-    return searchTerm + ' not found, enjoy some <' + imageUrl + '|cats> instead, requested by ' + userName;
+    let noResultsFoundBlocks = {
+        "blocks": [
+            {
+                "type": "image",
+                "title": {
+                    "type": "plain_text",
+                    "text": searchTerm + " not found, enjoy some cats instead (just for you)",
+                    "emoji": true
+                },
+                "image_url": "https://images.metmuseum.org/CRDImages/dp/web-large/DP815335.jpg",
+                "alt_text": searchTerm
+            }	
+        ]
+    };
+
+    bot.replyInteractive(message, noResultsFoundBlocks);
 
 }
 
