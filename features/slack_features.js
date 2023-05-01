@@ -263,7 +263,7 @@ async function sendInteractiveDialog(bot, message, searchTerm, objectData, userN
         attempt: attempt
     };
 
-    let notFoundBlocks = {
+    let noImageFoundBlocks = {
         "blocks": [            
             {
                 "type": "section",
@@ -352,7 +352,7 @@ async function sendInteractiveDialog(bot, message, searchTerm, objectData, userN
     if (objectData.primaryImageSmall) {
         blocks = foundBlocks;
     } else {
-        blocks = notFoundBlocks;
+        blocks = noImageFoundBlocks;
     }
 
     if (!allowShuffle) {
