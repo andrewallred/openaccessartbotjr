@@ -1,6 +1,6 @@
 let MongoClient = require('mongodb').MongoClient;
 
-module.exports = { getTeamById, saveTeam, getTermsForSlang, saveSearchTerm, getObjectForSearchTerm }
+module.exports = { getTeamById, saveTeam, getTermsForSlang, saveSearchResults, saveSearchTerm, getObjectForSearchTerm }
 
 const winston = require('winston');
 const consoleTransport = new winston.transports.Console();
@@ -69,6 +69,24 @@ async function getTermsForSlang(slang) {
     client.close();
 
     return slangTerms;
+
+}
+
+async function saveSearchResults(searchTerm, objectIDs) {
+
+    let MongoClient = require('mongodb').MongoClient;
+
+    await MongoClient.connect(process.env.MONGO_URI, async (err, db) => {
+
+        if (err) throw err;
+        let dbo = db.db(process.env.MONGO_DB);
+        let searchResults = { SearchTerm: encodeURIComponent(searchTerm), ObjectIDs: objectIDs };
+        dbo.collection("SearchResults").insertOne(term, function(err, res) {
+            if (err) throw err;
+            db.close();
+        });
+
+    });
 
 }
 
