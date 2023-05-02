@@ -7,8 +7,6 @@ const DbService = require('../services/db_service.js');
 const axios = require('axios').default;
 
 const winston = require('winston');
-const consoleTransport = new winston.transports.Console();
-winston.add(consoleTransport);
 
 const baseSearchUrl = 'https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&q=';
 const baseObjectUrl = 'https://collectionapi.metmuseum.org/public/collection/v1/objects/';

@@ -3,8 +3,6 @@ let MongoClient = require('mongodb').MongoClient;
 module.exports = { getTeamById, saveTeam, getTermsForSlang, saveSearchResults, saveSearchTerm, getObjectForSearchTerm }
 
 const winston = require('winston');
-const consoleTransport = new winston.transports.Console();
-winston.add(consoleTransport);
 
 async function saveTeam(teamId, botAccessToken, botUserId) {
 

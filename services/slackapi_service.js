@@ -6,8 +6,6 @@ module.exports = { deleteEphemeralMessage, respondPubliclyToEphemeralMessage }
 const axios = require('axios').default;
 
 const winston = require('winston');
-const consoleTransport = new winston.transports.Console();
-winston.add(consoleTransport);
 
 async function deleteEphemeralMessage(response_url) {
 
