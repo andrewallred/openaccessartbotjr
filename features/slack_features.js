@@ -105,7 +105,7 @@ module.exports = function(controller) {
 
         let timeElapsed = endTime - startTime;
 
-        winston.debug('slash command timeElapsed ' + timeElapsed);
+        winston.debug('slash command ' + message.command + ' timeElapsed ' + timeElapsed);
 
     });
 
