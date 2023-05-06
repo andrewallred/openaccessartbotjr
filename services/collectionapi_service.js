@@ -58,6 +58,8 @@ async function getObjectsForSearchTerm(searchTerm) {
 
     let startTime = new Date();
 
+    let unprocessedSearchTerm = searchTerm;
+
     let paintingsOnly = searchTerm.includes("#paintings");
     if (paintingsOnly) {
         searchTerm = searchTerm.replace(" #paintings ", "");
@@ -116,7 +118,7 @@ async function getObjectsForSearchTerm(searchTerm) {
         Total: data.total,
     };
 
-    DbService.saveSearchResults(searchTerm, data.objectIDs);
+    DbService.saveSearchResults(unprocessedSearchTerm, data.objectIDs);
 
     let endTime = new Date();
 
