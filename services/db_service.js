@@ -89,6 +89,7 @@ async function saveSearchResults(searchTerm, objectIDs) {
 
         SearchResultsCollection.updateOne(query, update, options, function(err, res) {
             db.close();
+            if (err) throw err;            
         });
 
     });
@@ -107,6 +108,7 @@ async function saveSearchTerm(searchTerm, objectUrl, objectId) {
         dbo.collection("SearchTerms").insertOne(term, function(err, res) {
             if (err) throw err;
             db.close();
+            if (err) throw err;            
         });
 
     });
