@@ -78,9 +78,16 @@ async function saveSearchResults(searchTerm, objectIDs) {
 
         if (err) throw err;
         let dbo = db.db(process.env.MONGO_DB);
+
+        let SearchResultsCollection = dbo.collection("SearchResults");
+        let query = { SearchTerm: encodeURIComponent(searchTerm) };
+
         let searchResults = { SearchTerm: encodeURIComponent(searchTerm), ObjectIDs: objectIDs };
-        dbo.collection("SearchResults").insertOne(searchResults, function(err, res) {
-            if (err) throw err;
+        let update = { $set: searchResults };
+
+        let options = { upsert: true };
+
+        SearchResultsCollection.updateOne(query, update, options, function(err, res) {
             db.close();
         });
 
