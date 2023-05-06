@@ -116,6 +116,8 @@ async function getObjectsForSearchTerm(searchTerm) {
         Total: data.total,
     };
 
+    DbService.saveSearchResults(searchTerm, data.objectIDs);
+
     let endTime = new Date();
 
     let timeElapsed = endTime - startTime;
