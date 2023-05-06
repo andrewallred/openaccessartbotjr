@@ -79,7 +79,7 @@ async function saveSearchResults(searchTerm, objectIDs) {
         if (err) throw err;
         let dbo = db.db(process.env.MONGO_DB);
         let searchResults = { SearchTerm: encodeURIComponent(searchTerm), ObjectIDs: objectIDs };
-        dbo.collection("SearchResults").insertOne(term, function(err, res) {
+        dbo.collection("SearchResults").insertOne(searchResults, function(err, res) {
             if (err) throw err;
             db.close();
         });
