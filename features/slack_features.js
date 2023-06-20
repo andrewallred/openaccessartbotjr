@@ -90,7 +90,7 @@ module.exports = function(controller) {
 
                 winston.error('An error occurred ' + err);
 
-                let response = buildSomethingWentWrongResponse("https://images.metmuseum.org/CRDImages/dp/web-large/DP835005.jpg", searchTerm, message.user_name);
+                let response = buildSomethingWentWrongResponse("https://images.metmuseum.org/CRDImages/dp/web-large/DP835005.jpg");
                     
                 let responseUrl = message.incoming_message.channelData.response_url;
                 SlackApiService.respondPubliclyToEphemeralMessage(responseUrl, response);
@@ -253,7 +253,7 @@ function sendNoResultsResponse(bot, message, searchTerm) {
 
 }
 
-function buildSomethingWentWrongResponse(imageUrl, searchTerm, userName) {
+function buildSomethingWentWrongResponse(imageUrl) {
 
     return 'something went wrong! <' + imageUrl + '|try again>';
 
