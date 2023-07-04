@@ -151,7 +151,7 @@ async function getObjectById(objectId) {
 
     let timeElapsed = endTime - startTime;
 
-    winston.info('getObjectById timeElapsed ' + timeElapsed);
+    winston.info('getObjectById id ' + objectId + ' timeElapsed ' + timeElapsed);
 
     if (result.statusCode == 404) {
         return null;
