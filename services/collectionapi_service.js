@@ -107,7 +107,7 @@ async function getObjectsForSearchTerm(searchTerm) {
 
     let axiosTimeElapsed = axiosEndTime - startTime;
 
-    winston.debug('axios search timeElapsed ' + axiosTimeElapsed);
+    winston.info('axios search timeElapsed ' + axiosTimeElapsed);
     
     if (data == null || data.total == 0) {            
         return null;
@@ -124,7 +124,7 @@ async function getObjectsForSearchTerm(searchTerm) {
 
     let timeElapsed = endTime - startTime;
 
-    winston.debug('getObjectForSearchTerm timeElapsed ' + timeElapsed);
+    winston.info('getObjectForSearchTerm timeElapsed ' + timeElapsed);
 
     return Promise.resolve(searchResults);
 
@@ -142,7 +142,7 @@ async function getObjectById(objectId) {
 
     let timeElapsed = endTime - startTime;
 
-    winston.debug('getObjectById timeElapsed ' + timeElapsed);
+    winston.info('getObjectById timeElapsed ' + timeElapsed);
 
     if (result.statusCode == 404) {
         return null;
