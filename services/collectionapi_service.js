@@ -113,7 +113,7 @@ async function getObjectsForSearchTerm(searchTerm) {
 
     let axiosEndTime = new Date();
 
-    let axiosTimeElapsed = axiosEndTime - startTime;
+    let axiosTimeElapsed = axiosEndTime - axiosStartTime;
 
     winston.info('axios search timeElapsed ' + axiosTimeElapsed);
     
