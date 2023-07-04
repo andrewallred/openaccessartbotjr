@@ -15,6 +15,8 @@ const filter = "";
 
 async function getObjectForSearchTerm(searchTerm) {
 
+    let startTime = new Date();
+
     let searchResults = await getObjectsForSearchTerm(searchTerm);
 
     if (searchResults == null) {
@@ -51,6 +53,12 @@ async function getObjectForSearchTerm(searchTerm) {
         }
         
     }
+
+    let endTime = new Date();
+
+    let timeElapsed = endTime - startTime;
+
+    winston.info('getObjectForSearchTerm timeElapsed ' + timeElapsed);
 
 }
 
