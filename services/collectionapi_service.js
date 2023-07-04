@@ -144,7 +144,8 @@ async function getObjectById(objectId) {
 
     const objectUrl = baseObjectUrl + objectId;
 
-    let result = axios.get(objectUrl).then(results => Promise.resolve(results.data));
+    let result = await axios.get(objectUrl);
+    let data = result.data;
 
     let endTime = new Date();
 
@@ -156,6 +157,6 @@ async function getObjectById(objectId) {
         return null;
     }
 
-    return result;
+    return data;
 
 }
